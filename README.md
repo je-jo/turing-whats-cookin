@@ -8,12 +8,23 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 
 ## Learning Goals
 
-- Fetch API
-- Webpack
+- Use object and array prototype methods to perform data manipulation
+- Create a user interface that is easy to use and clearly displays information.
+- Write DRY, reusable code that follows SRP and trends toward function purity
+- Implement a robust testing suite using TDD
+- Make network requests to retrieve data
 
 ## Preview
 
 ![]()
+
+## Instructions
+
+- Clone this repo.
+- Change into the directory and run `npm install`.
+- Run `npm start` and open [http://localhost:8080/](http://localhost:8080/) in your browser.
+- When done, use command `ctrl + c` to stop the local server.
+- To run tests, run `npm test`.
 
 ## Technologies used
 
