@@ -1,6 +1,6 @@
 //Here is an example demonstrating logic separated that can be imported into the scripts and test files. Feel free to update this later! 
 
-import { recipeData, ingredientsData } from "./data/recipes"
+// import { recipeData, ingredientsData } from "./data/recipes"
 
 
 
@@ -25,8 +25,8 @@ export const searchRecipes = (list, searchTerm) => {
   return "Sorry, no match found"
 }
 
-export const findRecipeIngredients = (recipeList, id, ingredientsList) => {
-  const recipe = recipeList.find(recipe => recipe.id === id);
+export const findRecipeIngredients = (recipeList, recipeId, ingredientsList) => {
+  const recipe = recipeList.find(recipe => recipe.id === recipeId);
   const ingredientIds = recipe.ingredients.map(ingredient => ingredient.id);
   const ingredientNames = ingredientsList
     .filter(ingredient => ingredientIds.includes(ingredient.id))
@@ -34,6 +34,23 @@ export const findRecipeIngredients = (recipeList, id, ingredientsList) => {
   return ingredientNames
 }
 
-// export const calculateCost = recipe => {
+export const calculateCost = (recipeList, recipeId, ingredientsList) => {
+  const recipe = recipeList.find(recipe => recipe.id === recipeId);
+  const ingredientIds = recipe.ingredients.map(ingredient => ingredient.id);
+  const ingredientAmmounts = recipe.ingredients.map(ingredient => ingredient.quantity.amount)
+  const ingredientPrices = ingredientsList
+    .filter(ingredient => ingredientIds.includes(ingredient.id))
+    .map(ingredient => ingredient.estimatedCostInCents)
+  const totalPrice = ingredientAmmounts.reduce((acc, curr) => {
+    acc += (curr * ingredientPrices[ingredientAmmounts.indexOf(curr)]) / 100
+    return acc
+  }, 0)
+  return totalPrice
+}
 
-// }
+export const getInstructions = (recipeList, recipeId) => {
+  const recipe = recipeList.find(recipe => recipe.id === recipeId);
+  const instructions = recipe.instructions.map(prop => prop.instruction)
+  return instructions
+}
+

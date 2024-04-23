@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { testRecipeData, testIngredientsData } from '../src/data/sampleData'
-import { filterByTag, searchRecipes, findRecipeIngredients } from '../src/recipes';
+import { filterByTag, searchRecipes, findRecipeIngredients, calculateCost, getInstructions } from '../src/recipes';
 
 
 
@@ -313,23 +313,37 @@ describe('Recipes by name', () => {
 });
 
 describe("Get ingredients", () => {
-  it ("Should return an array of ingredient names for a given recipe", () => {
+  it("Should return an array of ingredient names for a given recipe", () => {
     const elvisPancakesIngredients = findRecipeIngredients(testRecipeData, 741603, testIngredientsData);
     expect(elvisPancakesIngredients).to.deep.equal(["wheat flour", "baking powder", "ripe banana"]);
   })
-  it ("Should return an array of ingredient names for a different recipe", () => {
+  it("Should return an array of ingredient names for a different recipe", () => {
     const cookieCupsIngredients = findRecipeIngredients(testRecipeData, 595736, testIngredientsData);
     expect(cookieCupsIngredients).to.deep.equal(["wheat flour", "bicarbonate of soda", "eggs"]);
   })
 });
 
+describe("Calculate cost of ingredients", () => {
+  it("Should return total cost of given's recipe ingredients", () => {
+    const elvisCost = calculateCost(testRecipeData, 741603, testIngredientsData);
+    expect(elvisCost).to.equal(48.06)
+  })
+  it("Should return total cost of different recipe ingredients", () => {
+    const cookieCupsCost = calculateCost(testRecipeData, 595736, testIngredientsData);
+    expect(cookieCupsCost).to.equal(9.76)
+  })
+});
+
+describe("Get Instructions", () => {
+  it("Should return an array of instructions", () => {
+    const cookieCupsInstructions = getInstructions(testRecipeData, 595736);
+    expect(cookieCupsInstructions).to.deep.equal(["In a large mixing bowl, whisk together the dry ingredients...", "Add egg and vanilla and mix until combined.", "Add dry ingredients and mix on low just until..."])
+  });
+  it("Should return instructions for a different recipe", () => {
+    const porkChopsInstructions = getInstructions(testRecipeData, 678353)
+    expect(porkChopsInstructions).to.deep.equal(["Season the pork chops with salt and pepper and grill or pan fry..."])
+  })
+})
 
 
 
-
-// it.skip('Should calculate the cost of a given\'s recipe ingredients', () => {
-
-// });
-// it.skip('Should return instructions for a given recipe', () => {
-
-// });
