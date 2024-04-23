@@ -1,11 +1,93 @@
 //NOTE: Your DOM manipulation will occur in this file
 
-//Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
-const displayRecipes = () => {
-  console.log(`Displaying recipes now`)
+import recipeData from './data/recipes';
+import { filterByTag, searchRecipes, findRecipeIngredients, calculateCost, getInstructions, getAllTags } from './recipes';
+
+const tagList = document.querySelector("#tag-list");
+const btnFilter = document.querySelector("#btn-filter");
+const searchBox = document.querySelector("#search")
+const btnSearch = document.querySelector("#btn-search");
+const recipeDisplay = document.querySelector("#recipe-list");
+
+const renderSearchResults = (e) => {
+  e.preventDefault();
+  const filteredList = searchRecipes(recipeData, searchBox.value);
+  searchBox.value = "";
+  if (filteredList === "Sorry, no match found") {
+    recipeDisplay.textContent = "Sorry, no match found, please try different search terms."
+  } else {
+    renderRecipes(filteredList)
+  }
+
 }
 
 
-export {
-  displayRecipes,
-}
+  const renderFiltered = (e) => {
+    e.preventDefault();
+    const checkBoxes = [...tagList.querySelectorAll(":checked")];
+    const values = checkBoxes.map(checkbox => checkbox.value);
+    if (values.length) {
+      const filteredList = filterByTag(recipeData, values);
+      renderRecipes(filteredList)
+    } else {
+      renderRecipes(recipeData)
+    }
+  }
+
+  btnSearch.addEventListener("click", renderSearchResults)
+  btnFilter.addEventListener("click", renderFiltered);
+
+
+
+
+
+  const renderTagList = () => {
+    const allTags = getAllTags(recipeData);
+    allTags.forEach(tag => {
+      const checkbox = document.createElement("input");
+      checkbox.setAttribute("type", "checkbox");
+      checkbox.setAttribute("id", tag);
+      checkbox.setAttribute("value", tag);
+      const label = document.createElement("label");
+      label.setAttribute("for", tag)
+      label.textContent = tag;
+      const listItem = document.createElement("li");
+      listItem.appendChild(checkbox)
+      listItem.appendChild(label)
+      tagList.appendChild(listItem)
+    })
+  };
+
+  const renderRecipes = (list) => {
+
+    recipeDisplay.textContent = "";
+    list.forEach(recipe => {
+      const image = document.createElement("img");
+      image.setAttribute("src", recipe.image);
+      image.setAttribute("alt", recipe.name);
+      const title = document.createElement("h3");
+      title.textContent = recipe.name;
+      const listItem = document.createElement("li")
+      listItem.classList.add("card");
+      listItem.appendChild(image)
+      listItem.appendChild(title)
+      recipeDisplay.appendChild(listItem)
+    })
+  }
+
+  renderRecipes(recipeData)
+
+  //Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
+  const displayRecipes = () => {
+    console.log(`Displaying recipes now`)
+  }
+
+  renderTagList()
+
+
+
+
+  export {
+    renderTagList,
+    displayRecipes,
+  }

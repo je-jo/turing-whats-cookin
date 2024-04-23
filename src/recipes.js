@@ -1,8 +1,6 @@
 //Here is an example demonstrating logic separated that can be imported into the scripts and test files. Feel free to update this later! 
 
-// import { recipeData, ingredientsData } from "./data/recipes"
-
-
+import recipeData from "./data/recipes";
 
 
 export const filterByTag = (list, tags) => {
@@ -53,4 +51,18 @@ export const getInstructions = (recipeList, recipeId) => {
   const instructions = recipe.instructions.map(prop => prop.instruction)
   return instructions
 }
+
+// helper function
+
+export const getAllTags = (recipeList) => {
+  const tagList = recipeList.reduce((acc, curr) => {
+    curr.tags.forEach(tag => {
+      if (!acc.includes(tag)) {
+        acc.push(tag)
+      }
+    })
+    return acc
+  }, []);
+  return tagList
+};
 

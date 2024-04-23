@@ -1,17 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Whats Cookin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="What's Cookin - Choose a recipe to cook">
+  <title>What's Cookin</title>
 </head>
 
 <body>
   <header>
-    <h1>Whats Cookin</h1>
+    <h1>What's Cookin</h1>
   </header>
-  <aside>filters go here</aside>
-  <main>recipes go here</main>
+
+  <aside>
+    <form action="">
+      <label for="search">Search recipes</label>
+      <input id="search" type="text" placeholder="Type name (or ingredient)">
+      <button id="btn-search">Search</button>
+    </form>
+    <form action="">
+      <fieldset>
+        <legend>Filter recipes by tag:</legend>
+        <ul id="tag-list" role="list">
+        </ul>
+      </fieldset>
+      <button id="btn-filter">Apply filter</button>
+    </form>
+  </aside>
+
+  <main>
+    <h2>All the recipes</h2>
+    <ul id="recipe-list" role="list">
+    </ul>
+  </main>
+
   <footer>
     <p><small><a href="https://turing.edu/" target="_blank">Turing School</a> Project. Coded by <a
           href="https://github.com/je-jo" target="_blank">Jelena Jovičić</a>, 2024.</small></p>
