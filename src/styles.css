@@ -1,3 +1,47 @@
+/* bitter-regular - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Bitter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/bitter-v33-latin_latin-ext-regular.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* bitter-italic - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Bitter';
+  font-style: italic;
+  font-weight: 400;
+  src: url('./fonts/bitter-v33-latin_latin-ext-italic.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* bitter-700 - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Bitter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./fonts/bitter-v33-latin_latin-ext-700.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* bitter-700italic - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Bitter';
+  font-style: italic;
+  font-weight: 700;
+  src: url('./fonts/bitter-v33-latin_latin-ext-700italic.woff2') format('woff2');
+  /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
 /* Box sizing rules */
 *,
 *::before,
@@ -92,14 +136,31 @@ textarea:not([rows]) {
 /* end andy bell's reset */
 
 :root {
+  --fs-h1: 4.2rem;
+  --fs-h2: 3.15rem;
+  --fs-h3: 2rem;
+  --fs-h4: 1.35rem;
+  --fs-text: 1.15rem;
+  --fs-small: 0.8rem;
+  --clr-primary: #8BC34A;
+  --clr-primary-dark: #689F38;
+  --clr-primary-light: #DCEDC8;
+  --clr-text: #212121;
+  --clr-text-secondary: #757575;
+  --clr-divider: #BDBDBD;
+  --clr-accent: #FFC107;
+  --clr-white: #FAFAFA;
   --col-width: 16rem;
   --col-width: clamp(15rem, 16.667vw + 11.667rem, 20rem);
-  --white: white;
 }
 
-/* * {
-  outline: 1px solid tomato;
-} */
+/* utilities */
+
+* {
+  margin: 0;
+  padding: 0;
+  /* outline: 1px solid tomato; */
+}
 
 .sr-only {
   position: absolute;
@@ -117,30 +178,85 @@ textarea:not([rows]) {
   display: none;
 }
 
+/* layout */
+
 body {
-  margin: 0;
   font-family: sans-serif;
+  color: var(--clr-text);
+  background-color: var(--clr-white);
+}
+
+header {
+  padding: 1em;
+  text-align: center;
+}
+
+main {
+  width: min(100%, 72rem);
+  margin: 0 auto;
+  padding: 5vh clamp(1rem, 5vw, 3rem) 1rem;
 }
 
 aside {
   position: relative;
-  background-color: bisque;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
   padding: 1rem;
   gap: 1rem;
+  background-color: var(--clr-divider);
 }
 
-main {
-  margin: 0 auto;
-  max-width: 72rem;
+footer {
+  padding: 2.5rem 0 1rem;
+  text-align: center;
 }
 
-ul {
-  padding: 0;
+/* typography */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Bitter", serif;
+  font-weight: 700;
+  line-height: 1.15;
+
 }
+
+h2,
+h3,
+h4 {
+  margin-bottom: 1em;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+}
+
+h4 {
+  font-size: var(--fs-h4);
+}
+
+p,
+li {
+  font-size: var(--fs-text);
+}
+
+small {
+  font-size: var(--fs-small);
+}
+
+/* cards */
 
 ul#recipe-list {
   display: grid;
@@ -152,21 +268,22 @@ ul#recipe-list {
   margin: 0 auto;
 }
 
-ul#tag-list {
-  padding: 2rem;
-  margin: 0;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  background-color: bisque;
-  border: 1px solid tomato;
+.card {
+  max-width: var(--col-width);
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
 }
 
-fieldset {
-  padding: 0;
-  margin: 0;
-  border: none;
+.card h3 {
+  font-size: var(--fs-h4);
+  letter-spacing: 0.04em;
+
+  padding: 1em 0.5em;
 }
+
+
+/* buttons and links*/
 
 button {
   display: inline-flex;
@@ -176,39 +293,41 @@ button {
   min-width: 10ch;
   min-height: 44px;
   padding: 0.25em 1em;
-  border: 2px solid currentColor;
   border-radius: 8px;
-  font-size: 1.125rem;
+  border: 0;
+  font-size: 1.025rem;
   line-height: 1.1;
   text-align: center;
+  text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
+}
+
+a:hover {
+  color: var(--clr-primary-dark);
+}
+
+/* tags list */
+
+ul#tag-list {
+  padding: 2rem;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: var(--clr-white);
+  border: 3px solid tomato;
+}
+
+/* input */
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
 }
 
 input[type="text"] {
   font-size: 1.125rem;
   padding: 0.25em 1em;
-}
-
-.card {
-  max-width: var(--col-width);
-  overflow: hidden;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
-}
-
-h1,
-h2,
-h3 {
-  font-family: serif;
-}
-
-.card>h3 {
-  margin: 0;
-  padding: 2rem 1rem;
-}
-
-footer {
-  text-align: center;
-  padding: 2.5rem 0 1rem;
 }
