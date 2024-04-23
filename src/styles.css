@@ -93,7 +93,7 @@ textarea:not([rows]) {
 
 :root {
   --col-width: 16rem;
-  --col-width: clamp(15rem, 16.667vw + 11.667rem, 20rem); 
+  --col-width: clamp(15rem, 16.667vw + 11.667rem, 20rem);
   --white: white;
 }
 
@@ -101,8 +101,36 @@ textarea:not([rows]) {
   outline: 1px solid tomato;
 } */
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hidden {
+  display: none;
+}
+
 body {
+  margin: 0;
   font-family: sans-serif;
+}
+
+aside {
+  position: relative;
+  background-color: bisque;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
 }
 
 main {
@@ -124,6 +152,44 @@ ul#recipe-list {
   margin: 0 auto;
 }
 
+ul#tag-list {
+  padding: 2rem;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: bisque;
+  border: 1px solid tomato;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  align-self: start;
+  justify-content: center;
+  min-width: 10ch;
+  min-height: 44px;
+  padding: 0.25em 1em;
+  border: 2px solid currentColor;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+input[type="text"] {
+  font-size: 1.125rem;
+  padding: 0.25em 1em;
+}
+
 .card {
   max-width: var(--col-width);
   overflow: hidden;
@@ -131,7 +197,9 @@ ul#recipe-list {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: serif;
 }
 

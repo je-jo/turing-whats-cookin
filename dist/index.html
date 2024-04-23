@@ -15,17 +15,18 @@
 
   <aside>
     <form action="">
-      <label for="search">Search recipes</label>
-      <input id="search" type="text" placeholder="Type name (or ingredient)">
+      <label for="search">Search recipes:</label>
+      <input id="search" type="text" placeholder="Type name (or ingredient*)">
       <button id="btn-search">Search</button>
     </form>
     <form action="">
       <fieldset>
-        <legend>Filter recipes by tag:</legend>
-        <ul id="tag-list" role="list">
+        <legend class="sr-only">Filter recipes by tag:</legend>
+        <button id="btn-tags">Show tags</button>
+        <ul class="hidden" id="tag-list" role="list">
         </ul>
       </fieldset>
-      <button id="btn-filter">Apply filter</button>
+
     </form>
   </aside>
 
