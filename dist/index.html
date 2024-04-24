@@ -14,9 +14,10 @@
   </header>
 
   <aside>
-    <form action="">
-      <label for="search">Search recipes:</label>
-      <input id="search" type="text" placeholder="Type name (or ingredient*)">
+    <form action="" class="wrapper-search">
+      <label for="search">Search recipes:
+        <input id="search" type="text" placeholder="Type name or ingredient" maxlength="20">
+      </label>
       <button id="btn-search">Search</button>
     </form>
     <form action="">
@@ -24,14 +25,17 @@
         <legend class="sr-only">Filter recipes by tag:</legend>
         <button id="btn-tags">Show tags</button>
         <ul class="hidden" id="tag-list" role="list">
+          <li>
+            <button id="btn-filter">Apply filter</button>
+          </li>
         </ul>
       </fieldset>
-
     </form>
   </aside>
 
   <main>
-    <h2>Viewing all the recipes:</h2>
+    <h2 id="view-info">Viewing all the recipes:</h2>
+    <div id="selected-tags"></div>
     <ul id="recipe-list" role="list">
     </ul>
   </main>

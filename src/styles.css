@@ -189,6 +189,7 @@ body {
 header {
   padding: 1em;
   text-align: center;
+  border-bottom: 1px solid var(--clr-divider);
 }
 
 main {
@@ -197,20 +198,11 @@ main {
   padding: 5vh clamp(1rem, 5vw, 3rem) 1rem;
 }
 
-aside {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 1rem;
-  gap: 1rem;
-  background-color: var(--clr-divider);
-}
-
 footer {
+  margin-top: 2rem;
   padding: 2.5rem 0 1rem;
   text-align: center;
+  border-top: 1px solid var(--clr-divider);
 }
 
 /* typography */
@@ -233,10 +225,12 @@ h4 {
 
 h1 {
   font-size: var(--fs-h1);
+  font-size: clamp(3rem, 2.217vw + 2.426rem, var(--fs-h1));
 }
 
 h2 {
   font-size: var(--fs-h2);
+  font-size: clamp(2.5rem, 1.201vw + 2.189rem, var(--fs-h2));
 }
 
 h3 {
@@ -254,6 +248,83 @@ li {
 
 small {
   font-size: var(--fs-small);
+}
+
+/* aside and form */
+
+aside {
+  position: relative;
+  width: min(100%, 72rem);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.wrapper-search {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.wrapper-search button {
+  align-self: flex-end;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
+
+ul#tag-list {
+  padding: 2rem;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  border: 2px solid var(--clr-divider);
+  background-color: white;
+}
+
+.form-control {
+  display: grid;
+  grid-template-columns: 1.5rem auto;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  /* margin-bottom: 0.8rem; */
+  border-bottom: 1px dotted var(--clr-divider);
+}
+
+li.form-control:nth-of-type(2) {
+  margin-top: 1.2rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  min-height: 44px;
+  margin-top: 0.6em;
+  font-size: 1.125rem;
+  padding: 0.25em 1em;
+  border: none;
+}
+
+/* selected tags */
+
+#selected-tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+#selected-tags>* {
+  padding: 0.5rem 0.8rem;
+  background-color: #FFC107;
 }
 
 /* cards */
@@ -276,9 +347,8 @@ ul#recipe-list {
 }
 
 .card h3 {
-  font-size: var(--fs-h4);
-  letter-spacing: 0.04em;
-
+  /* font-size: var(--fs-h4); */
+  /* letter-spacing: 0.04em; */
   padding: 1em 0.5em;
 }
 
@@ -290,7 +360,7 @@ button {
   align-items: center;
   align-self: start;
   justify-content: center;
-  min-width: 10ch;
+  min-width: 132px;
   min-height: 44px;
   padding: 0.25em 1em;
   border-radius: 8px;
@@ -303,31 +373,10 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background-color: var(--clr-primary-light);
+}
+
 a:hover {
   color: var(--clr-primary-dark);
-}
-
-/* tags list */
-
-ul#tag-list {
-  padding: 2rem;
-  margin: 0;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  background-color: var(--clr-white);
-  border: 3px solid tomato;
-}
-
-/* input */
-
-fieldset {
-  padding: 0;
-  margin: 0;
-  border: none;
-}
-
-input[type="text"] {
-  font-size: 1.125rem;
-  padding: 0.25em 1em;
 }

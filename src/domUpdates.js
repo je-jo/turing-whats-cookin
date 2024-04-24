@@ -4,10 +4,18 @@ import recipeData from './data/recipes';
 import { filterByTag, searchRecipes, findRecipeIngredients, calculateCost, getInstructions, getAllTags } from './recipes';
 
 const tagList = document.querySelector("#tag-list");
-const searchBox = document.querySelector("#search")
+const searchBox = document.querySelector("#search");
 const btnSearch = document.querySelector("#btn-search");
-const btnShowTags = document.querySelector("#btn-tags")
+const btnShowTags = document.querySelector("#btn-tags");
+const btnFilter = document.querySelector("#btn-filter");
+
+let checkBoxes = [];
+let values = [];
+
+const viewInfo = document.querySelector("#view-info");
+const selectedTags = document.querySelector("#selected-tags");
 const recipeDisplay = document.querySelector("#recipe-list");
+
 
 // helper functions
 
@@ -15,40 +23,6 @@ const toggleVisibility = (e) => {
   e.preventDefault()
   tagList.classList.toggle("hidden")
 }
-
-// regular functions
-
-const renderSearchResults = (e) => {
-  e.preventDefault();
-  const filteredList = searchRecipes(recipeData, searchBox.value);
-  searchBox.value = "";
-  if (filteredList === "Sorry, no match found") {
-    recipeDisplay.textContent = "Sorry, no match found, please try different search terms."
-  } else {
-    renderRecipes(filteredList)
-  }
-
-}
-
-
-const renderFiltered = (e) => {
-  e.preventDefault();
-  const checkBoxes = [...tagList.querySelectorAll(":checked")];
-  const values = checkBoxes.map(checkbox => checkbox.value);
-  if (values.length) {
-    const filteredList = filterByTag(recipeData, values);
-    renderRecipes(filteredList)
-  } else {
-    renderRecipes(recipeData)
-  }
-}
-
-btnSearch.addEventListener("click", renderSearchResults)
-
-
-
-
-
 
 const renderTagList = () => {
   const allTags = getAllTags(recipeData);
@@ -61,22 +35,16 @@ const renderTagList = () => {
     label.setAttribute("for", tag)
     label.textContent = tag;
     const listItem = document.createElement("li");
+    listItem.classList.add("form-control");
     listItem.appendChild(checkbox)
     listItem.appendChild(label)
     tagList.appendChild(listItem)
-  })
-  const listItem = document.createElement("li");
-  const btnFilter = document.createElement("button");
-  btnFilter.setAttribute("id", "btn-filter");
-  btnFilter.textContent = "Apply filter";
-  btnFilter.addEventListener("click", renderFiltered);
-  btnFilter.addEventListener("click", toggleVisibility);
-  listItem.appendChild(btnFilter);
-  tagList.appendChild(listItem)
+  });
 };
 
-const renderRecipes = (list) => {
+// regular functions
 
+const renderRecipes = (list) => {
   recipeDisplay.textContent = "";
   list.forEach(recipe => {
     const image = document.createElement("img");
@@ -90,10 +58,51 @@ const renderRecipes = (list) => {
     listItem.appendChild(title)
     recipeDisplay.appendChild(listItem)
   })
-
 }
 
-renderRecipes(recipeData)
+const renderSearchResults = (e) => {
+  e.preventDefault();
+  let list;
+  if (searchBox.value && checkBoxes.length) {
+    viewInfo.textContent = `Viewing search results for "${searchBox.value}" in selected tags:`
+    values = checkBoxes.map(checkbox => checkbox.value);
+    list = filterByTag(recipeData, values);
+  } else if (searchBox.value) {
+    viewInfo.textContent = `Viewing search results for "${searchBox.value}" in all recipes:`
+    list = recipeData;
+  } else {
+    viewInfo.textContent = "Viewing all the recipes:"
+    list = recipeData;
+  }
+  const filteredList = searchRecipes(list, searchBox.value);
+  searchBox.value = "";
+  if (filteredList === "Sorry, no match found") {
+    recipeDisplay.textContent = "Sorry, no match found, please try different search terms."
+  } else {
+    renderRecipes(filteredList);
+  }
+}
+
+const renderFiltered = (e) => {
+  e.preventDefault();
+  checkBoxes = [...tagList.querySelectorAll(":checked")];
+  values = checkBoxes.map(checkbox => checkbox.value);
+  selectedTags.textContent = "";
+  if (values.length) {
+    viewInfo.textContent = `Viewing recipes filtered by selected tags:`;
+    values.forEach(value => {
+      const tag = document.createElement("span");
+      tag.textContent = value;
+      selectedTags.appendChild(tag)
+    });
+
+    const filteredList = filterByTag(recipeData, values);
+    renderRecipes(filteredList);
+  } else {
+    viewInfo.textContent = "Viewing all the recipes:"
+    renderRecipes(recipeData)
+  }
+}
 
 //Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
 const displayRecipes = () => {
@@ -101,13 +110,12 @@ const displayRecipes = () => {
 }
 
 renderTagList();
+renderRecipes(recipeData);
 
-
-
-
+btnSearch.addEventListener("click", renderSearchResults)
 btnShowTags.addEventListener("click", toggleVisibility)
-
-
+btnFilter.addEventListener("click", renderFiltered);
+btnFilter.addEventListener("click", toggleVisibility);
 
 
 export {
