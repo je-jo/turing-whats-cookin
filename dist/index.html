@@ -36,8 +36,18 @@
   <main>
     <h2 id="view-info">Viewing all the recipes:</h2>
     <div id="selected-tags"></div>
-    <ul id="recipe-list" role="list">
-    </ul>
+    <ul id="recipe-list" role="list"></ul>
+    <div class="hidden" id="recipe-modal">
+      <button id="btn-close">Close</button>
+      <button>Add to favorites</button>
+      <img id="recipe-img">
+      <h3 id="recipe-title">Recipe title</h3>
+      <h4>Ingredients:</h4>
+      <ul id="recipe-ingredients"></ul>
+      <p>Estimated total cost of ingredients: $<span id="recipe-cost"></span></h4>
+      <h4>Instructions:</h4>
+      <ol id="recipe-instructions"></ol>
+    </div>
   </main>
 
   <footer>

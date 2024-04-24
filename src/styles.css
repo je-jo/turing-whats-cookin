@@ -352,6 +352,19 @@ ul#recipe-list {
   padding: 1em 0.5em;
 }
 
+/* single recipe display */
+
+#recipe-modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5vh clamp(1rem, 5vw, 3rem) 1rem;
+  background-color: var(--clr-primary-light);
+  z-index: 100;
+}
+
 
 /* buttons and links*/
 

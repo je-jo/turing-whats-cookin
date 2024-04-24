@@ -1,5 +1,6 @@
 //NOTE: Your DOM manipulation will occur in this file
 
+import ingredientsData from './data/ingredients';
 import recipeData from './data/recipes';
 import { filterByTag, searchRecipes, findRecipeIngredients, calculateCost, getInstructions, getAllTags } from './recipes';
 
@@ -15,6 +16,53 @@ let values = [];
 const viewInfo = document.querySelector("#view-info");
 const selectedTags = document.querySelector("#selected-tags");
 const recipeDisplay = document.querySelector("#recipe-list");
+
+const recipeModal = document.querySelector("#recipe-modal");
+const recipeImg = document.querySelector("#recipe-img");
+const recipeTitle = document.querySelector("#recipe-title");
+const recipeIngredientsList = document.querySelector("#recipe-ingredients");
+const recipeCost = document.querySelector("#recipe-cost");
+const recipeInstructionsList = document.querySelector("#recipe-instructions");
+const btnClose = document.querySelector("#btn-close");
+btnClose.addEventListener("click", () => {
+  recipeDisplay.classList.remove("hidden");
+  recipeModal.classList.add("hidden");
+})
+
+
+
+const renderChosenRecipe = (e) => {
+  let recipeId;
+  if (e.target.closest(".card")) {
+    recipeId = Number(e.target.closest(".card").id)
+  }
+  const recipe = recipeData.find(recipe => recipe.id === recipeId);
+  recipeImg.setAttribute("src", recipe.image);
+  recipeImg.setAttribute("alt", recipe.name);
+  recipeTitle.textContent = recipe.name;
+  recipeIngredientsList.textContent = "";
+  const ingredientNames = findRecipeIngredients(recipeData, recipeId, ingredientsData);
+  recipe.ingredients.forEach((ingredient, index) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
+    recipeIngredientsList.appendChild(listItem);
+  });
+  recipeCost.textContent = calculateCost(recipeData, recipeId, ingredientsData);
+  recipeInstructionsList.textContent = "";
+  const instructions = getInstructions(recipeData, recipeId);
+  instructions.forEach(instruction => {
+    const listItem = document.createElement("li");
+    listItem.textContent = instruction;
+    recipeInstructionsList.appendChild(listItem);
+  });
+  recipeDisplay.classList.add("hidden");
+  setTimeout(() => {
+    recipeModal.classList.remove("hidden");
+  }, 1);
+
+}
+
+recipeDisplay.addEventListener("click", renderChosenRecipe);
 
 
 // helper functions
@@ -52,7 +100,8 @@ const renderRecipes = (list) => {
     image.setAttribute("alt", recipe.name);
     const title = document.createElement("h3");
     title.textContent = recipe.name;
-    const listItem = document.createElement("li")
+    const listItem = document.createElement("li");
+    listItem.setAttribute("id", recipe.id)
     listItem.classList.add("card");
     listItem.appendChild(image)
     listItem.appendChild(title)
