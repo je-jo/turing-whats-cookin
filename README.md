@@ -18,6 +18,20 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 
 ![]()
 
+## Features
+
+- [x] View all recipes;
+- [x] Filter recipes by multiple tags;
+- [x] Search recipes by name;
+- [ ] Search recipes by ingredient;
+- [ ] Click on a recipe to view more information (directions, ingredients needed, and total cost);
+- [ ] Add/remove a recipe to a list of recipes to cook;
+- [ ] Filter recipes to cook list by multiple tags;
+- [ ] Search recipes to cook list by name;
+- [ ] Search recipes to cook list by ingredient;
+- [ ] Implement fetch API for accessing the data from provided endpoints, instead of hardcoded data files;
+- [ ] Build test suite using sample dataset.
+
 ## Instructions
 
 - Clone this repo.
@@ -33,3 +47,10 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - Chai
 - Webpack
 - Fetch API
+
+## Helpful links
+
+- [A (more) Modern CSS Reset by Andy Bell](https://piccalil.li/blog/a-more-modern-css-reset/)
+- [HTML / Sass Jumpstart by Stephanie Eckless](https://github.com/5t3ph/html-sass-jumpstart) - Minimal HTML/Sass Template, used mostly for sensible sizing.
+- [Fluid Typography Tool](https://fluidtypography.com/)
+- [google-webfonts-helper](https://gwfh.mranftl.com/fonts) - A Hassle-Free Way to Self-Host Google Fonts
