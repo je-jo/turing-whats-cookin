@@ -4,6 +4,7 @@ import ingredientsData from './data/ingredients';
 import recipeData from './data/recipes';
 import { filterByTag, searchRecipes, findRecipeIngredients, calculateCost, getInstructions, getAllTags } from './recipes';
 
+const body = document.querySelector("body");
 const tagList = document.querySelector("#tag-list");
 const searchBox = document.querySelector("#search");
 const btnSearch = document.querySelector("#btn-search");
@@ -25,6 +26,7 @@ const recipeCost = document.querySelector("#recipe-cost");
 const recipeInstructionsList = document.querySelector("#recipe-instructions");
 const btnClose = document.querySelector("#btn-close");
 btnClose.addEventListener("click", () => {
+  body.style.overflow = "auto"
   recipeModal.close();
 });
 
@@ -56,6 +58,7 @@ const renderChosenRecipe = (e) => {
   });
   setTimeout(() => {
     recipeModal.showModal();
+    body.style.overflow = "hidden";
   }, 100)
 }
 

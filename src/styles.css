@@ -355,16 +355,14 @@ ul#recipe-list {
 /* single recipe display */
 
 #recipe-modal {
-  /* max-width: 100%;
-  max-height: 100%; */
+  max-width: 100%;
   height: auto;
-  margin: 5vh auto;
+  /* margin: 5vh auto; */
   padding: 1rem;
   color: inherit;
   border: 0;
   border-radius: 16px;
-  /* position: fixed; */
-  /* overflow: auto; */
+  overflow-y: scroll;
 }
 
 #recipe-modal::backdrop {
@@ -372,14 +370,14 @@ ul#recipe-list {
 }
 
 .wrapper-recipe {
-  /* position: absolute; */
   margin: 0 auto;
   display: grid;
-  height: auto;
-  max-width: 80ch;
-  max-width: 556px;
+  max-width: 556px; 
+  height: min-content;
+  /* height: fit-content; */
   padding: 5vh clamp(1rem, 5vw, 3rem) 2.5rem;
   gap: 2.5rem;
+  overflow-y: hidden;
 }
 
 .wrapper-recipe--header {
