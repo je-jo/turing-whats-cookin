@@ -25,9 +25,8 @@ const recipeCost = document.querySelector("#recipe-cost");
 const recipeInstructionsList = document.querySelector("#recipe-instructions");
 const btnClose = document.querySelector("#btn-close");
 btnClose.addEventListener("click", () => {
-  recipeDisplay.classList.remove("hidden");
-  recipeModal.classList.add("hidden");
-})
+  recipeModal.close();
+});
 
 
 
@@ -55,11 +54,9 @@ const renderChosenRecipe = (e) => {
     listItem.textContent = instruction;
     recipeInstructionsList.appendChild(listItem);
   });
-  recipeDisplay.classList.add("hidden");
   setTimeout(() => {
-    recipeModal.classList.remove("hidden");
-  }, 1);
-
+    recipeModal.showModal();
+  }, 100)
 }
 
 recipeDisplay.addEventListener("click", renderChosenRecipe);

@@ -16,7 +16,7 @@
   <aside>
     <form action="" class="wrapper-search">
       <label for="search">Search recipes:
-        <input id="search" type="text" placeholder="Type name or ingredient" maxlength="20">
+        <input id="search" type="text" placeholder="Type recipe name" maxlength="20">
       </label>
       <button id="btn-search">Search</button>
     </form>
@@ -37,17 +37,23 @@
     <h2 id="view-info">Viewing all the recipes:</h2>
     <div id="selected-tags"></div>
     <ul id="recipe-list" role="list"></ul>
-    <div class="hidden" id="recipe-modal">
-      <button id="btn-close">Close</button>
-      <button>Add to favorites</button>
-      <img id="recipe-img">
-      <h3 id="recipe-title">Recipe title</h3>
-      <h4>Ingredients:</h4>
-      <ul id="recipe-ingredients"></ul>
-      <p>Estimated total cost of ingredients: $<span id="recipe-cost"></span></h4>
-      <h4>Instructions:</h4>
-      <ol id="recipe-instructions"></ol>
-    </div>
+    <dialog id="recipe-modal">
+      <div class="wrapper-recipe">
+        <div class="wrapper-recipe--header">
+          <img id="recipe-img" src="" alt="placeholder image">
+          <div class="wrapper-buttons">
+            <button id="btn-close">Back to recipes</button>
+            <button>Add to favorites</button>
+          </div>
+          <h3 id="recipe-title">Recipe title</h3>
+        </div>
+        <h4>Ingredients:</h4>
+        <ul id="recipe-ingredients"></ul>
+        <p>Estimated total cost of ingredients: $<span id="recipe-cost"></span></h4>
+        <h4>Instructions:</h4>
+        <ol id="recipe-instructions"></ol>
+      </div>
+    </dialog>
   </main>
 
   <footer>
