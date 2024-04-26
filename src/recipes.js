@@ -26,9 +26,7 @@ export const searchRecipes = (list, searchTerm) => {
 
 export const findRecipeIngredients = (recipeList, recipeId, ingredientsList) => {
   const recipe = recipeList.find(recipe => recipe.id === recipeId);
-  console.table(recipe.ingredients)
   const ingredientIds = recipe.ingredients.map(ingredient => ingredient.id);
-  console.table(ingredientIds)
   const ingredientNames = ingredientIds.map(ingredientId => {
     ingredientsList.forEach(ingredient => {
       if (ingredient.id === ingredientId) {
@@ -39,8 +37,6 @@ export const findRecipeIngredients = (recipeList, recipeId, ingredientsList) => 
   })
   return ingredientNames;
 }
-
-console.log(findRecipeIngredients(recipeData, 412309, ingredientsData))
 
 export const calculateCost = (recipeList, recipeId, ingredientsList) => {
   const recipe = recipeList.find(recipe => recipe.id === recipeId);

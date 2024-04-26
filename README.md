@@ -24,7 +24,7 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - [x] Filter recipes by multiple tags;
 - [x] Search recipes by name;
 - [ ] Search recipes by ingredient;
-- [ ] Click on a recipe to view more information (directions, ingredients needed, and total cost);
+- [x] Click on a recipe to view more information (directions, ingredients needed, and total cost);
 - [ ] Add/remove a recipe to a list of recipes to cook;
 - [ ] Filter recipes to cook list by multiple tags;
 - [ ] Search recipes to cook list by name;

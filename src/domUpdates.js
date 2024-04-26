@@ -100,12 +100,18 @@ const renderRecipes = (list) => {
     image.setAttribute("alt", recipe.name);
     const title = document.createElement("h3");
     title.textContent = recipe.name;
+    const tagBox = document.createElement("div");
+    const tag = document.createElement("span");
+    tag.textContent = recipe.tags[0];
+    tagBox.classList.add("card-tags");
+    tagBox.appendChild(tag);
     const listItem = document.createElement("li");
     listItem.setAttribute("id", recipe.id)
     listItem.classList.add("card");
-    listItem.appendChild(image)
-    listItem.appendChild(title)
-    recipeDisplay.appendChild(listItem)
+    listItem.appendChild(image);
+    listItem.appendChild(title);
+    listItem.appendChild(tagBox);
+    recipeDisplay.appendChild(listItem);
   })
 }
 
