@@ -48,7 +48,7 @@ const renderChosenRecipe = (e) => {
     listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
     recipeIngredientsList.appendChild(listItem);
   });
-  recipeCost.textContent = calculateCost(recipeData, recipeId, ingredientsData);
+  recipeCost.textContent = calculateCost(recipeData, recipeId, ingredientsData).toFixed(2);
   recipeInstructionsList.textContent = "";
   const instructions = getInstructions(recipeData, recipeId);
   instructions.forEach(instruction => {

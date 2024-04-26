@@ -1,5 +1,6 @@
 //Here is an example demonstrating logic separated that can be imported into the scripts and test files. Feel free to update this later! 
 
+import ingredientsData from "./data/ingredients";
 import recipeData from "./data/recipes";
 
 
@@ -25,12 +26,21 @@ export const searchRecipes = (list, searchTerm) => {
 
 export const findRecipeIngredients = (recipeList, recipeId, ingredientsList) => {
   const recipe = recipeList.find(recipe => recipe.id === recipeId);
+  console.table(recipe.ingredients)
   const ingredientIds = recipe.ingredients.map(ingredient => ingredient.id);
-  const ingredientNames = ingredientsList
-    .filter(ingredient => ingredientIds.includes(ingredient.id))
-    .map(ingredient => ingredient.name)
-  return ingredientNames
+  console.table(ingredientIds)
+  const ingredientNames = ingredientIds.map(ingredientId => {
+    ingredientsList.forEach(ingredient => {
+      if (ingredient.id === ingredientId) {
+        ingredientId = ingredient.name
+      }
+    });
+    return ingredientId;
+  })
+  return ingredientNames;
 }
+
+console.log(findRecipeIngredients(recipeData, 412309, ingredientsData))
 
 export const calculateCost = (recipeList, recipeId, ingredientsList) => {
   const recipe = recipeList.find(recipe => recipe.id === recipeId);
