@@ -42,9 +42,14 @@ export const calculateCost = (recipeList, recipeId, ingredientsList) => {
   const recipe = recipeList.find(recipe => recipe.id === recipeId);
   const ingredientIds = recipe.ingredients.map(ingredient => ingredient.id);
   const ingredientAmmounts = recipe.ingredients.map(ingredient => ingredient.quantity.amount)
-  const ingredientPrices = ingredientsList
-    .filter(ingredient => ingredientIds.includes(ingredient.id))
-    .map(ingredient => ingredient.estimatedCostInCents)
+  const ingredientPrices = ingredientIds.map(ingredientId => {
+    ingredientsList.forEach(ingredient => {
+      if (ingredient.id === ingredientId) {
+        ingredientId = ingredient.estimatedCostInCents;
+      }
+    })
+    return ingredientId;
+  })
   const totalPrice = ingredientAmmounts.reduce((acc, curr) => {
     acc += (curr * ingredientPrices[ingredientAmmounts.indexOf(curr)]) / 100
     return acc
