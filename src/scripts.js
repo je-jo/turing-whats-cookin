@@ -13,14 +13,3 @@ import { displayRecipes } from './domUpdates'
 console.log(ingredientsData)
 // findRecipeIngredients("Dirty Steve's Original Wing Sauce")
 displayRecipes();
-
-// const sideDishes = filterByTag(recipeData, ["side dish"]);
-// console.log("sidedishes", sideDishes)
-// const pizzas = searchRecipes(recipeData, "piZzA")
-// console.log("pizzas", pizzas)
-// const elvisIngredients = findRecipeIngredients(recipeData, 741603, ingredientsData)
-// console.log("elvis pancakes ingredients", elvisIngredients)
-// const elvisCost = calculateCost(recipeData, 741603, ingredientsData)
-// console.log("cost of pancakes", elvisCost)
-// const elvisInstructions = getInstructions(recipeData, 741603)
-// console.log("instructions: ", elvisInstructions)
