@@ -142,17 +142,19 @@ textarea:not([rows]) {
   --fs-h4: 1.35rem;
   --fs-text: 1.15rem;
   --fs-small: 0.8rem;
-  --clr-primary: #8BC34A;
-  --clr-primary-dark: #689F38;
-  --clr-primary-light: #DCEDC8;
-  --clr-text: #212121;
-  --clr-text-secondary: #757575;
-  --clr-divider: #BDBDBD;
-  --clr-accent: #FFC107;
-  --clr-white: #FAFAFA;
+  --clr-text: #1c494c;
+  --clr-text-secondary: #73cadc;
+  --clr-divider: #9bdabe;
+  --clr-accent: #5269bd;
+  --clr-white: #f7f8f9;
   --col-width: 16rem;
   --col-width: clamp(15rem, 16.667vw + 11.667rem, 20rem);
 }
+
+
+
+
+
 
 /* utilities */
 
@@ -327,7 +329,7 @@ input[type="text"] {
 
 #selected-tags>* {
   padding: 0.5rem 0.8rem;
-  background-color: #FFC107;
+  background-color: var(--clr-text-secondary);
 }
 
 /* cards */
@@ -434,9 +436,9 @@ button {
 }
 
 button:hover {
-  background-color: var(--clr-primary-light);
+  background-color: var(--clr-divider);
 }
 
 a:hover {
-  color: var(--clr-primary-dark);
+  color: var(--clr-accent);
 }
