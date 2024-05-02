@@ -141,7 +141,7 @@ textarea:not([rows]) {
   --fs-h3: 2rem;
   --fs-h4: 1.35rem;
   --fs-text: 1.15rem;
-  --fs-small: 0.8rem;
+  --fs-small: 0.875rem;
   --clr-text: #1c494c;
   --clr-text-secondary: #73cadc;
   --clr-divider: #9bdabe;
@@ -150,11 +150,6 @@ textarea:not([rows]) {
   --col-width: 16rem;
   --col-width: clamp(15rem, 16.667vw + 11.667rem, 20rem);
 }
-
-
-
-
-
 
 /* utilities */
 
@@ -301,13 +296,8 @@ ul#tag-list {
   grid-template-columns: 1.5rem auto;
   gap: 0.5rem;
   padding: 0.5rem;
-  /* margin-bottom: 0.8rem; */
   border-bottom: 1px dotted var(--clr-divider);
 }
-
-/* li.form-control:nth-of-type(2) {
-  margin-top: 1.2rem;
-} */
 
 input[type="text"] {
   width: 100%;
@@ -316,20 +306,6 @@ input[type="text"] {
   font-size: 1.125rem;
   padding: 0.25em 1em;
   border: none;
-}
-
-/* selected tags */
-
-#selected-tags {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-  gap: 1rem;
-}
-
-#selected-tags>* {
-  padding: 0.5rem 0.8rem;
-  background-color: var(--clr-text-secondary);
 }
 
 /* cards */
@@ -367,14 +343,9 @@ ul#recipe-list {
   padding: 1em 0;
 }
 
-.card-tags {
-  margin-top: auto;
-}
 
-.card-tags > * {
-  padding: 0.2em;
-  color: var(--clr-divider);
-}
+
+
 
 /* single recipe display */
 
@@ -417,6 +388,53 @@ ul#recipe-list {
   justify-content: space-between;
 }
 
+/* tags */
+
+.wrapper-tags {
+  display: flex;
+  margin-top: auto;
+  flex-wrap: wrap;
+  gap: 0.2em;
+  list-style: none;
+}
+
+.wrapper-tags#selected-tags {
+  margin-bottom: 2em;
+  gap: 1em;
+}
+
+.wrapper-tags#selected-tags>* {
+  font-size: 1rem;
+}
+
+.card-tags>*:nth-child(-n + 3) {
+  display: inline;
+}
+
+.card>.wrapper-tags>* {
+  display: none;
+}
+
+.card>.wrapper-tags>*:nth-child(-n+3) {
+  display: inline;
+}
+
+/* .wrapper-tags > * {
+  font-size: var(--fs-small);
+  padding: 0.1em 0.3em;
+  background-color: var(--clr-divider);
+} */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25em 0.5em;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  background-color: var(--clr-divider);
+  border-radius: 4px;
+}
+
 
 /* buttons and links*/
 
@@ -431,6 +449,7 @@ button {
   border-radius: 8px;
   border: 0;
   font-size: 1.025rem;
+  font-weight: 600;
   letter-spacing: 3px;
   line-height: 1.1;
   text-align: center;
@@ -446,12 +465,14 @@ button:hover {
 .btn-unselect {
   min-width: unset;
   font-size: inherit;
+  min-height: auto;
+  min-width: auto;
   background-color: transparent;
 }
 
 .btn-unselect:hover {
   background-color: transparent;
-  outline: 1px solid black;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.7))
 }
 
 a:hover {

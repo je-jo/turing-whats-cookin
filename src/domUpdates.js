@@ -15,6 +15,7 @@ const recipeDisplay = document.querySelector("#recipe-list");
 const recipeModal = document.querySelector("#recipe-modal");
 const recipeImg = document.querySelector("#recipe-img");
 const recipeTitle = document.querySelector("#recipe-title");
+const recipeTags = document.querySelector("#wrapper-tags");
 const recipeIngredientsList = document.querySelector("#recipe-ingredients");
 const recipeCost = document.querySelector("#recipe-cost");
 const recipeInstructionsList = document.querySelector("#recipe-instructions");
@@ -61,11 +62,14 @@ const renderRecipes = (list) => {
     image.setAttribute("height", 370);
     const title = document.createElement("h3");
     title.textContent = recipe.name;
-    const tagBox = document.createElement("div");
-    const tag = document.createElement("span");
-    tag.textContent = recipe.tags[0];
-    tagBox.classList.add("card-tags");
-    tagBox.appendChild(tag);
+    const tagBox = document.createElement("ul");
+    tagBox.classList.add("wrapper-tags");
+    recipe.tags.forEach(tag => {
+      const tagSpan = document.createElement("li");
+      tagSpan.classList.add("tag");
+      tagSpan.textContent = tag;
+      tagBox.appendChild(tagSpan);
+    })
     const listItem = document.createElement("li");
     listItem.setAttribute("id", recipe.id)
     listItem.classList.add("card");
@@ -107,11 +111,12 @@ const renderFiltered = (e) => {
   if (values.length) {
     viewInfo.textContent = `Viewing recipes filtered by selected tags:`;
     values.forEach(value => {
-      const tag = document.createElement("span");
+      const tag = document.createElement("li");
+      tag.classList.add("tag");
       tag.textContent = value;
       const closeTag = document.createElement("button");
       closeTag.classList.add("btn-unselect");
-      closeTag.textContent = "X"
+      closeTag.textContent = "x"
       tag.appendChild(closeTag)
       selectedTags.appendChild(tag)
     });
@@ -139,9 +144,17 @@ const renderChosenRecipe = (e) => {
     recipeId = Number(e.target.closest(".card").id)
   }
   const recipe = recipeData.find(recipe => recipe.id === recipeId);
+  console.log(recipe.tags)
   recipeImg.setAttribute("src", recipe.image);
   recipeImg.setAttribute("alt", recipe.name);
   recipeTitle.textContent = recipe.name;
+  recipeTags.textContent = "";
+  recipe.tags.forEach(tag => {
+    const recipeTag = document.createElement("li");
+    recipeTag.classList.add("tag");
+    recipeTag.textContent = tag;
+    recipeTags.appendChild(recipeTag)
+  })
   recipeIngredientsList.textContent = "";
   const ingredientNames = findRecipeIngredients(recipeData, recipeId, ingredientsData);
   recipe.ingredients.forEach((ingredient, index) => {
