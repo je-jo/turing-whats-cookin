@@ -312,6 +312,161 @@ describe('Recipes by name', () => {
   })
 });
 
+describe('Recipes by ingredient', () => {
+  it('Should return a filtered list of recipes based on recipes\'s ingredients', () => {
+    const recipesWithSoda = searchRecipes(testRecipeData, "soda")
+    expect(recipesWithSoda).to.deep.equal([
+      {
+        "id": 595736,
+        "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+        "ingredients": [
+          {
+            "id": 20081,
+            "quantity": {
+              "amount": 1.5,
+              "unit": "c"
+            }
+          },
+          {
+            "id": 18372,
+            "quantity": {
+              "amount": 0.5,
+              "unit": "tsp"
+            }
+          },
+          {
+            "id": 1123,
+            "quantity": {
+              "amount": 1,
+              "unit": "large"
+            }
+          }],
+        "instructions": [
+          {
+            "instruction": "In a large mixing bowl, whisk together the dry ingredients...",
+            "number": 1
+          },
+          {
+            "instruction": "Add egg and vanilla and mix until combined.",
+            "number": 2
+          },
+          {
+            "instruction": "Add dry ingredients and mix on low just until...",
+            "number": 3
+          }],
+        "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+        "tags": [
+          "antipasti",
+          "starter",
+          "snack",
+          "appetizer",
+          "antipasto",
+          "hor d'oeuvre"
+        ]
+      }
+    ])
+  })
+  it('Should return multiple results', () => {
+    const recipesWithFlour = searchRecipes(testRecipeData, "flour")
+    expect(recipesWithFlour).to.deep.equal([{
+      "id": 595736,
+      "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+      "ingredients": [
+        {
+          "id": 20081,
+          "quantity": {
+            "amount": 1.5,
+            "unit": "c"
+          }
+        },
+        {
+          "id": 18372,
+          "quantity": {
+            "amount": 0.5,
+            "unit": "tsp"
+          }
+        },
+        {
+          "id": 1123,
+          "quantity": {
+            "amount": 1,
+            "unit": "large"
+          }
+        }],
+      "instructions": [
+        {
+          "instruction": "In a large mixing bowl, whisk together the dry ingredients...",
+          "number": 1
+        },
+        {
+          "instruction": "Add egg and vanilla and mix until combined.",
+          "number": 2
+        },
+        {
+          "instruction": "Add dry ingredients and mix on low just until...",
+          "number": 3
+        }],
+      "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+      "tags": [
+        "antipasti",
+        "starter",
+        "snack",
+        "appetizer",
+        "antipasto",
+        "hor d'oeuvre"
+      ]
+    },
+    {
+      "id": 741603,
+      "image": "https://spoonacular.com/recipeImages/741603-556x370.jpeg",
+      "ingredients": [
+        {
+          "id": 20081,
+          "quantity": {
+            "amount": 1,
+            "unit": "cup"
+          }
+        },
+        {
+          "id": 18371,
+          "quantity": {
+            "amount": 2,
+            "unit": "teaspoons"
+          }
+        },
+        {
+          "id": 9040,
+          "quantity": {
+            "amount": 12,
+            "unit": "servings"
+          }
+        }],
+      "instructions": [
+        {
+          "instruction": "Watch how to make this recipe.",
+          "number": 1
+        },
+        {
+          "instruction": "In a large bowl, whisk together buttermilk, eggs, baking powder, sugar, salt and butter.",
+          "number": 2
+        },
+        {
+          "instruction": "In another large bowl mix together all-purpose flour and buckwheat flour.",
+          "number": 3
+        }],
+      "name": "Elvis Pancakes",
+      "tags": [
+        "side dish"
+      ]
+    }
+    ]);
+  });
+  it('Should return a message if no match is found', () => {
+    const noEggz = searchRecipes(testRecipeData, "eggz")
+    expect(noEggz).to.equal("Sorry, no match found")
+  })
+})
+
 describe("Get ingredients", () => {
   it("Should return an array of ingredient names for a given recipe", () => {
     const elvisPancakesIngredients = findRecipeIngredients(testRecipeData, 741603, testIngredientsData);

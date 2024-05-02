@@ -13,13 +13,23 @@ export const filterByTag = (list, tags) => {
 }
 
 export const searchRecipes = (list, searchTerm) => {
+  let searchResults = [];
   const lowercasedSearchTerm = searchTerm.toLowerCase();
   const recipeByName = list.filter(recipe => {
     let lowercasedName = recipe.name.toLowerCase();
     return lowercasedName.includes(lowercasedSearchTerm);
   });
-  if (recipeByName.length) {
-    return recipeByName;
+  searchResults = recipeByName;
+  list.forEach(recipe => {
+    const ingredients = findRecipeIngredients(list, recipe.id, ingredientsData);
+    ingredients.forEach(ingredient => {
+      if (ingredient.includes(lowercasedSearchTerm) && !searchResults.includes(recipe)) {
+        searchResults.push(recipe)
+      }
+    })
+  });
+  if (searchResults.length) {
+    return searchResults;
   }
   return "Sorry, no match found"
 }
