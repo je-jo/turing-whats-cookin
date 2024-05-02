@@ -1,5 +1,3 @@
-//NOTE: Your DOM manipulation will occur in this file
-
 import ingredientsData from './data/ingredients';
 import recipeData from './data/recipes';
 import { filterByTag, searchRecipes, findRecipeIngredients, calculateCost, getInstructions, getAllTags } from './recipes';
@@ -9,10 +7,6 @@ const tagList = document.querySelector("#tag-list");
 const searchBox = document.querySelector("#search");
 const btnSearch = document.querySelector("#btn-search");
 const btnShowTags = document.querySelector("#btn-tags");
-const btnFilter = document.querySelector("#btn-filter");
-
-let checkBoxes = [];
-let values = [];
 
 const viewInfo = document.querySelector("#view-info");
 const selectedTags = document.querySelector("#selected-tags");
@@ -21,49 +15,14 @@ const recipeDisplay = document.querySelector("#recipe-list");
 const recipeModal = document.querySelector("#recipe-modal");
 const recipeImg = document.querySelector("#recipe-img");
 const recipeTitle = document.querySelector("#recipe-title");
+const recipeTags = document.querySelector("#wrapper-tags");
 const recipeIngredientsList = document.querySelector("#recipe-ingredients");
 const recipeCost = document.querySelector("#recipe-cost");
 const recipeInstructionsList = document.querySelector("#recipe-instructions");
 const btnClose = document.querySelector("#btn-close");
-btnClose.addEventListener("click", () => {
-  body.style.overflow = "auto"
-  recipeModal.close();
-});
 
-
-
-const renderChosenRecipe = (e) => {
-  let recipeId;
-  if (e.target.closest(".card")) {
-    recipeId = Number(e.target.closest(".card").id)
-  }
-  const recipe = recipeData.find(recipe => recipe.id === recipeId);
-  recipeImg.setAttribute("src", recipe.image);
-  recipeImg.setAttribute("alt", recipe.name);
-  recipeTitle.textContent = recipe.name;
-  recipeIngredientsList.textContent = "";
-  const ingredientNames = findRecipeIngredients(recipeData, recipeId, ingredientsData);
-  recipe.ingredients.forEach((ingredient, index) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
-    recipeIngredientsList.appendChild(listItem);
-  });
-  recipeCost.textContent = calculateCost(recipeData, recipeId, ingredientsData).toFixed(2);
-  recipeInstructionsList.textContent = "";
-  const instructions = getInstructions(recipeData, recipeId);
-  instructions.forEach(instruction => {
-    const listItem = document.createElement("li");
-    listItem.textContent = instruction;
-    recipeInstructionsList.appendChild(listItem);
-  });
-  setTimeout(() => {
-    recipeModal.showModal();
-    body.style.overflow = "hidden";
-  }, 100)
-}
-
-recipeDisplay.addEventListener("click", renderChosenRecipe);
-
+let checkboxes = [];
+let values = [];
 
 // helper functions
 
@@ -86,7 +45,8 @@ const renderTagList = () => {
     listItem.classList.add("form-control");
     listItem.appendChild(checkbox)
     listItem.appendChild(label)
-    tagList.appendChild(listItem)
+    tagList.appendChild(listItem);
+
   });
 };
 
@@ -98,13 +58,18 @@ const renderRecipes = (list) => {
     const image = document.createElement("img");
     image.setAttribute("src", recipe.image);
     image.setAttribute("alt", recipe.name);
+    image.setAttribute("width", 556);
+    image.setAttribute("height", 370);
     const title = document.createElement("h3");
     title.textContent = recipe.name;
-    const tagBox = document.createElement("div");
-    const tag = document.createElement("span");
-    tag.textContent = recipe.tags[0];
-    tagBox.classList.add("card-tags");
-    tagBox.appendChild(tag);
+    const tagBox = document.createElement("ul");
+    tagBox.classList.add("wrapper-tags");
+    recipe.tags.forEach(tag => {
+      const tagSpan = document.createElement("li");
+      tagSpan.classList.add("tag");
+      tagSpan.textContent = tag;
+      tagBox.appendChild(tagSpan);
+    })
     const listItem = document.createElement("li");
     listItem.setAttribute("id", recipe.id)
     listItem.classList.add("card");
@@ -118,9 +83,9 @@ const renderRecipes = (list) => {
 const renderSearchResults = (e) => {
   e.preventDefault();
   let list;
-  if (searchBox.value && checkBoxes.length) {
+  if (searchBox.value && checkboxes.length) {
     viewInfo.textContent = `Viewing search results for "${searchBox.value}" in selected tags:`
-    values = checkBoxes.map(checkbox => checkbox.value);
+    values = checkboxes.map(checkbox => checkbox.value);
     list = filterByTag(recipeData, values);
   } else if (searchBox.value) {
     viewInfo.textContent = `Viewing search results for "${searchBox.value}" in all recipes:`
@@ -140,23 +105,75 @@ const renderSearchResults = (e) => {
 
 const renderFiltered = (e) => {
   e.preventDefault();
-  checkBoxes = [...tagList.querySelectorAll(":checked")];
-  values = checkBoxes.map(checkbox => checkbox.value);
+  checkboxes = [...tagList.querySelectorAll(":checked")];
+  values = checkboxes.map(checkbox => checkbox.value);
   selectedTags.textContent = "";
   if (values.length) {
     viewInfo.textContent = `Viewing recipes filtered by selected tags:`;
     values.forEach(value => {
-      const tag = document.createElement("span");
+      const tag = document.createElement("li");
+      tag.classList.add("tag");
       tag.textContent = value;
+      const closeTag = document.createElement("button");
+      closeTag.classList.add("btn-unselect");
+      closeTag.textContent = "x"
+      tag.appendChild(closeTag)
       selectedTags.appendChild(tag)
     });
-
     const filteredList = filterByTag(recipeData, values);
     renderRecipes(filteredList);
   } else {
     viewInfo.textContent = "Viewing all the recipes:"
     renderRecipes(recipeData)
   }
+}
+
+const handleFilterTags = (e) => {
+  if (e.target.closest("button")) {
+    let tagToRemove = e.target.parentNode.firstChild.textContent;
+    values.splice(values.indexOf(tagToRemove), 1);
+    const boxToUncheck = document.getElementById(tagToRemove);
+    boxToUncheck.checked = false;
+    renderFiltered(e);
+  }
+}
+
+const renderChosenRecipe = (e) => {
+  let recipeId;
+  if (e.target.closest(".card")) {
+    recipeId = Number(e.target.closest(".card").id)
+  }
+  const recipe = recipeData.find(recipe => recipe.id === recipeId);
+  console.log(recipe.tags)
+  recipeImg.setAttribute("src", recipe.image);
+  recipeImg.setAttribute("alt", recipe.name);
+  recipeTitle.textContent = recipe.name;
+  recipeTags.textContent = "";
+  recipe.tags.forEach(tag => {
+    const recipeTag = document.createElement("li");
+    recipeTag.classList.add("tag");
+    recipeTag.textContent = tag;
+    recipeTags.appendChild(recipeTag)
+  })
+  recipeIngredientsList.textContent = "";
+  const ingredientNames = findRecipeIngredients(recipeData, recipeId, ingredientsData);
+  recipe.ingredients.forEach((ingredient, index) => {
+    const listItem = document.createElement("li");
+    listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
+    recipeIngredientsList.appendChild(listItem);
+  });
+  recipeCost.textContent = calculateCost(recipeData, recipeId, ingredientsData).toFixed(2);
+  recipeInstructionsList.textContent = "";
+  const instructions = getInstructions(recipeData, recipeId);
+  instructions.forEach(instruction => {
+    const listItem = document.createElement("li");
+    listItem.textContent = instruction;
+    recipeInstructionsList.appendChild(listItem);
+  });
+  setTimeout(() => {
+    recipeModal.showModal();
+    body.style.overflow = "hidden";
+  }, 100)
 }
 
 //Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
@@ -167,10 +184,15 @@ const displayRecipes = () => {
 renderTagList();
 renderRecipes(recipeData);
 
-btnSearch.addEventListener("click", renderSearchResults)
-btnShowTags.addEventListener("click", toggleVisibility)
-btnFilter.addEventListener("click", renderFiltered);
-btnFilter.addEventListener("click", toggleVisibility);
+btnSearch.addEventListener("click", renderSearchResults);
+btnShowTags.addEventListener("click", toggleVisibility);
+recipeDisplay.addEventListener("click", renderChosenRecipe);
+tagList.addEventListener("change", renderFiltered);
+selectedTags.addEventListener("click", handleFilterTags);
+btnClose.addEventListener("click", () => {
+  body.style.overflow = "auto"
+  recipeModal.close();
+});
 
 
 export {
