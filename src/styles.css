@@ -142,11 +142,16 @@ textarea:not([rows]) {
   --fs-h4: 1.35rem;
   --fs-text: 1.15rem;
   --fs-small: 0.875rem;
-  --clr-text: #1c494c;
+  /* --clr-text: #1c494c;
   --clr-text-secondary: #73cadc;
   --clr-divider: #9bdabe;
   --clr-accent: #5269bd;
-  --clr-white: #f7f8f9;
+  --clr-white: #f7f8f9; */
+
+  --clr-white: hsl(30, 50%, 98%);
+  --clr-divider: hsl(35, 100%, 82%);
+  --clr-text: hsl(29, 73%, 16%);
+  --clr-accent: hsl(19, 100%, 52%);
   --col-width: 16rem;
   --col-width: clamp(15rem, 16.667vw + 11.667rem, 20rem);
 }
@@ -157,6 +162,11 @@ textarea:not([rows]) {
   margin: 0;
   padding: 0;
   /* outline: 1px solid tomato; */
+}
+
+*:focus-visible {
+  outline: 3px dotted var(--clr-accent);
+  outline-offset: 3px;
 }
 
 .sr-only {
@@ -305,7 +315,12 @@ input[type="text"] {
   margin-top: 0.6em;
   font-size: 1.125rem;
   padding: 0.25em 1em;
-  border: none;
+  border: 2px solid var(--clr-accent);
+  border-radius: 8px;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--clr-accent);
 }
 
 /* cards */
@@ -324,15 +339,18 @@ ul#recipe-list {
   display: flex;
   flex-direction: column;
   max-width: var(--col-width);
-  padding: 0.5em;
+  /* padding: 0.5em; */
+  background-color: #fff;
+  border: 1px solid var(--clr-divider);
+  border-radius: 1rem;
   overflow: hidden;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28);
+  /* border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28); */
 }
 
 .card:hover {
   cursor: pointer;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 1px 2px hsla(29, 73%, 16%, 0.18);
 }
 
 .card img {
@@ -340,7 +358,12 @@ ul#recipe-list {
 }
 
 .card h3 {
-  padding: 1em 0;
+  /* font-size: var(--fs-h4); */
+  padding: 1em 0.5em;
+}
+
+.card > .wrapper-tags {
+  padding: 0.5em;
 }
 
 
@@ -385,6 +408,8 @@ ul#recipe-list {
 
 .wrapper-buttons {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
   justify-content: space-between;
 }
 
@@ -443,7 +468,7 @@ button {
   align-items: center;
   align-self: start;
   justify-content: center;
-  min-width: 132px;
+  min-width: 157px;
   min-height: 44px;
   padding: 0.25em 1em;
   border-radius: 8px;
@@ -455,6 +480,9 @@ button {
   text-align: center;
   text-transform: uppercase;
   text-decoration: none;
+  color: var(--clr-text);
+  background-color: transparent;
+  border: 2px solid var(--clr-accent);
   cursor: pointer;
 }
 
@@ -468,6 +496,7 @@ button:hover {
   min-height: auto;
   min-width: auto;
   background-color: transparent;
+  border: 0;
 }
 
 .btn-unselect:hover {
