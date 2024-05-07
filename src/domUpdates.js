@@ -46,7 +46,6 @@ const renderTagList = () => {
     listItem.appendChild(checkbox)
     listItem.appendChild(label)
     tagList.appendChild(listItem);
-
   });
 };
 
@@ -189,10 +188,17 @@ btnShowTags.addEventListener("click", toggleVisibility);
 recipeDisplay.addEventListener("click", renderChosenRecipe);
 tagList.addEventListener("change", renderFiltered);
 selectedTags.addEventListener("click", handleFilterTags);
+
 btnClose.addEventListener("click", () => {
   body.style.overflow = "auto"
   recipeModal.close();
 });
+
+window.addEventListener("click", (e) => {
+  if (!e.target.closest("#btn-tags") && !e.target.closest("#tag-list")) {
+    tagList.classList.add("hidden");
+  }
+})
 
 
 export {

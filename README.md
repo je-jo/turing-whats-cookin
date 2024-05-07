@@ -23,7 +23,7 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - [x] View all recipes;
 - [x] Filter recipes by multiple tags;
 - [x] Search recipes by name;
-- [ ] Search recipes by ingredient;
+- [x] Search recipes by ingredient;
 - [x] Click on a recipe to view more information (directions, ingredients needed, and total cost);
 - [ ] Add/remove a recipe to a list of recipes to cook;
 - [ ] Filter recipes to cook list by multiple tags;
@@ -47,6 +47,11 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - Chai
 - Webpack
 - Fetch API
+
+## Design Inspiration
+
+- [Frontend Mentor](https://www.frontendmentor.io/challenges) - Layout, filtering
+- [Robb Owen's website](https://robbowen.digital/) - Colors, typography
 
 ## Helpful links
 
