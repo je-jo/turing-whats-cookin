@@ -80,7 +80,42 @@ describe('Recipes by tag', () => {
         "tags": [
           "side dish"
         ]
-      }])
+      },
+      {
+        "id": 764184,
+        "image": "https://spoonacular.com/recipeImages/764184-556x370.jpg",
+        "ingredients": [
+            {
+                "id": 1123,
+                "quantity": {
+                    "amount": 6,
+                    "unit": "large"
+                }
+            },
+            {
+                "id": 1002030,
+                "quantity": {
+                    "amount": 1,
+                    "unit": "pinch"
+                }
+            }
+        ],
+        "instructions": [
+            {
+                "instruction": "To hard-boil the eggs, place the raw eggs at the bottom of a large pot.",
+                "number": 1
+            },
+            {
+                "instruction": "Pour water in the pot until the water is 1-2 inches over the top of the eggs.",
+                "number": 2
+            }
+        ],
+        "name": "Hummus Deviled Eggs",
+        "tags": [
+            "side dish"
+        ]
+    }
+    ])
   });
   it('Should return a filtered list of recipes based on any of the provided tags', () => {
     const lunchesAndSauces = filterByTag(testRecipeData, ["lunch", "sauce"]);
@@ -461,6 +496,124 @@ describe('Recipes by ingredient', () => {
     }
     ]);
   });
+  it('Should not duplicate recipe if it satisfies multiple criteria - name AND ingredients or multiple ingredients', () => {
+    const recipeWithEggs = searchRecipes(testRecipeData, "egg");
+    expect(recipeWithEggs).to.deep.equal([
+      {
+        "id": 764184,
+        "image": "https://spoonacular.com/recipeImages/764184-556x370.jpg",
+        "ingredients": [
+            {
+                "id": 1123,
+                "quantity": {
+                    "amount": 6,
+                    "unit": "large"
+                }
+            },
+            {
+                "id": 1002030,
+                "quantity": {
+                    "amount": 1,
+                    "unit": "pinch"
+                }
+            }
+        ],
+        "instructions": [
+            {
+                "instruction": "To hard-boil the eggs, place the raw eggs at the bottom of a large pot.",
+                "number": 1
+            },
+            {
+                "instruction": "Pour water in the pot until the water is 1-2 inches over the top of the eggs.",
+                "number": 2
+            }
+        ],
+        "name": "Hummus Deviled Eggs",
+        "tags": [
+            "side dish"
+        ]
+    },
+      {
+      "id": 595736,
+      "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+      "ingredients": [
+        {
+          "id": 20081,
+          "quantity": {
+            "amount": 1.5,
+            "unit": "c"
+          }
+        },
+        {
+          "id": 18372,
+          "quantity": {
+            "amount": 0.5,
+            "unit": "tsp"
+          }
+        },
+        {
+          "id": 1123,
+          "quantity": {
+            "amount": 1,
+            "unit": "large"
+          }
+        }],
+      "instructions": [
+        {
+          "instruction": "In a large mixing bowl, whisk together the dry ingredients...",
+          "number": 1
+        },
+        {
+          "instruction": "Add egg and vanilla and mix until combined.",
+          "number": 2
+        },
+        {
+          "instruction": "Add dry ingredients and mix on low just until...",
+          "number": 3
+        }],
+      "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+      "tags": [
+        "antipasti",
+        "starter",
+        "snack",
+        "appetizer",
+        "antipasto",
+        "hor d'oeuvre"
+      ]
+    },
+    {
+      "id": 507921,
+      "image": "https://spoonacular.com/recipeImages/507921-556x370.jpg",
+      "ingredients": [
+        {
+          "id": 18371,
+          "quantity": {
+            "amount": 1,
+            "unit": "teaspoon"
+          }
+        },
+        {
+          "id": 19350,
+          "quantity": {
+            "amount": 0.25,
+            "unit": "cup"
+          }
+        },
+        {
+          "id": 1123,
+          "quantity": {
+            "amount": 1,
+            "unit": ""
+          }
+        }],
+      "name": "Ambrosia Cupcakes",
+      "tags": [
+        "side dish"
+      ]
+    }
+])
+})
+
   it('Should return a message if no match is found', () => {
     const noEggz = searchRecipes(testRecipeData, "eggz")
     expect(noEggz).to.equal("Sorry, no match found")
