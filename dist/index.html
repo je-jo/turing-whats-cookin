@@ -4,14 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="What's Cookin - Choose a recipe to cook">
+  <meta name="description" content="What's Cookin - Choose what to cook today">
+  <meta name="theme-color" content="hsl(35, 100%, 82%)">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
   <title>What's Cookin</title>
 </head>
 
 <body>
   <header>
     <div class="hero">
-      <div>
+      <div class="hero-title">
         <h1>What's Cookin'?</h1>
         <p>Choose what to cook today.</p>
       </div>
@@ -20,30 +22,34 @@
   </header>
 
   <aside>
-    <form action="" class="wrapper-search">
-      <label for="search">Search recipes:
-        <input id="search" type="text" placeholder="Name or ingredient" maxlength="20">
-      </label>
-      <button id="btn-search">Search</button>
-    </form>
-    <form action="">
-      <fieldset>
-        <legend class="sr-only">Filter recipes by tag:</legend>
-        <button id="btn-tags">Show tags</button>
-        <ul class="hidden" id="tag-list" role="list">
-        </ul>
-      </fieldset>
-    </form>
+    <div class="wrapper-controls">
+      <form method="get" class="wrapper-search">
+        <label for="search">Search recipes:
+          <input id="search" type="text" placeholder="Name or ingredient" maxlength="20">
+        </label>
+        <button id="btn-search">Search</button>
+      </form>
+      <form method="get">
+        <fieldset>
+          <legend class="sr-only">Filter recipes by tag:</legend>
+          <button id="btn-tags">Show tags</button>
+          <ul class="hidden" id="tag-list" role="list">
+          </ul>
+        </fieldset>
+      </form>
+    </div>
   </aside>
 
   <main>
+
     <h2 id="view-info">Viewing all the recipes:</h2>
     <ul id="selected-tags" class="wrapper-tags"></ul>
     <ul id="recipe-list" role="list"></ul>
-    <dialog id="recipe-modal" aria-modal="true">
+
+    <dialog id="recipe-modal">
       <div class="wrapper-recipe">
         <div class="wrapper-recipe--header">
-          <img id="recipe-img" src="" alt="placeholder image">
+          <img id="recipe-img" src="/src/images/3.Nutritionist.svg" alt="placeholder image">
           <div class="wrapper-buttons">
             <button id="btn-close">Back to recipes</button>
             <button>Add to favorites</button>
@@ -53,20 +59,19 @@
         </div>
         <h4>Ingredients:</h4>
         <ul id="recipe-ingredients"></ul>
-        <p>Estimated total cost of ingredients: $<span id="recipe-cost"></span></h4>
+        <p>Estimated total cost of ingredients: $<span id="recipe-cost"></span>
         <h4>Instructions:</h4>
         <ol id="recipe-instructions"></ol>
       </div>
     </dialog>
+
   </main>
 
   <footer>
     <p><small><a href="https://turing.edu/" target="_blank">Turing School</a> Project. Coded by <a
           href="https://github.com/je-jo" target="_blank">Jelena Jovičić</a>, 2024.</small></p>
   </footer>
-
+  <script src="bundle.js"></script>
 </body>
-<!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
-<script src="bundle.js"></script>
 
 </html>
