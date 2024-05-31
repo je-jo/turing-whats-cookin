@@ -12,7 +12,7 @@
 
 <body>
   <header>
-    <div class="hero">
+    <div class="hero wrapper">
       <div class="hero-title">
         <h1>What's Cookin'?</h1>
         <p>Choose what to cook today.</p>
@@ -21,7 +21,7 @@
     </div>
   </header>
 
-  <aside>
+  <aside class="wrapper">
     <div class="wrapper-controls">
       <form method="get" class="wrapper-search">
         <label for="search">Search recipes:
@@ -29,28 +29,28 @@
         </label>
         <button id="btn-search">Search</button>
       </form>
-      <form method="get">
+      <form method="get" class="wrapper-filter">
         <fieldset>
           <legend class="sr-only">Filter recipes by tag:</legend>
           <button id="btn-tags">Show tags</button>
-          <ul class="hidden" id="tag-list" role="list">
+          <ul class="tag-list hidden" id="tag-list" role="list">
           </ul>
         </fieldset>
       </form>
     </div>
   </aside>
 
-  <main>
+  <main class="wrapper">
 
     <h2 id="view-info">Viewing all the recipes:</h2>
-    <ul id="selected-tags" class="wrapper-tags"></ul>
-    <ul id="recipe-list" role="list"></ul>
+    <ul id="selected-tags" class="wrapper-tags selected-tags"></ul>
+    <ul class="recipe-list" id="recipe-list" role="list"></ul>
 
-    <dialog id="recipe-modal">
+    <dialog class="recipe-modal" id="recipe-modal">
       <div class="wrapper-recipe">
         <div class="wrapper-recipe--header">
           <img id="recipe-img" src="/src/images/3.Nutritionist.svg" alt="placeholder image">
-          <div class="wrapper-buttons">
+          <div class="wrapper-recipe--buttons">
             <button id="btn-close">Back to recipes</button>
             <button>Add to favorites</button>
           </div>
