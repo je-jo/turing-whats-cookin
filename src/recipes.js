@@ -4,7 +4,7 @@ import ingredientsData from "./data/ingredients";
 import recipeData from "./data/recipes";
 
 
-export const filterByTag = (list, tags) => {
+const filterByTag = (list, tags) => {
   const filteredList = list.filter(recipe => tags.some(tag => recipe.tags.includes(tag)));
   if (filteredList.length) {
     return filteredList
@@ -12,7 +12,7 @@ export const filterByTag = (list, tags) => {
   return "Sorry, no match found."
 }
 
-export const searchRecipes = (list, searchTerm) => {
+const searchRecipes = (list, searchTerm) => {
   let searchResults = [];
   const lowercasedSearchTerm = searchTerm.toLowerCase();
   const recipeByName = list.filter(recipe => {
@@ -34,7 +34,7 @@ export const searchRecipes = (list, searchTerm) => {
   return "Sorry, no match found"
 }
 
-export const findRecipeIngredients = (recipeList, recipeId, ingredientsList) => {
+const findRecipeIngredients = (recipeList, recipeId, ingredientsList) => {
   const recipe = recipeList.find(recipe => recipe.id === recipeId);
   const ingredientIds = recipe.ingredients.map(ingredient => ingredient.id);
   const ingredientNames = ingredientIds.map(ingredientId => {
@@ -48,7 +48,7 @@ export const findRecipeIngredients = (recipeList, recipeId, ingredientsList) => 
   return ingredientNames;
 }
 
-export const calculateCost = (recipeList, recipeId, ingredientsList) => {
+const calculateCost = (recipeList, recipeId, ingredientsList) => {
   const recipe = recipeList.find(recipe => recipe.id === recipeId);
   const ingredientIds = recipe.ingredients.map(ingredient => ingredient.id);
   const ingredientAmmounts = recipe.ingredients.map(ingredient => ingredient.quantity.amount)
@@ -67,7 +67,7 @@ export const calculateCost = (recipeList, recipeId, ingredientsList) => {
   return totalPrice
 }
 
-export const getInstructions = (recipeList, recipeId) => {
+const getInstructions = (recipeList, recipeId) => {
   const recipe = recipeList.find(recipe => recipe.id === recipeId);
   const instructions = recipe.instructions.map(prop => prop.instruction)
   return instructions
@@ -75,7 +75,7 @@ export const getInstructions = (recipeList, recipeId) => {
 
 // helper function
 
-export const getAllTags = (recipeList) => {
+const getAllTags = (recipeList) => {
   const tagList = recipeList.reduce((acc, curr) => {
     curr.tags.forEach(tag => {
       if (!acc.includes(tag)) {
@@ -86,4 +86,13 @@ export const getAllTags = (recipeList) => {
   }, []);
   return tagList
 };
+
+export {
+  filterByTag,
+  searchRecipes,
+  findRecipeIngredients,
+  calculateCost,
+  getInstructions,
+  getAllTags
+}
 

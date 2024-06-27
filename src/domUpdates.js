@@ -1,6 +1,6 @@
 import ingredientsData from './data/ingredients';
 import recipeData from './data/recipes';
-import { filterByTag, searchRecipes, findRecipeIngredients, calculateCost, getInstructions, getAllTags } from './recipes';
+import * as recipes from './recipes';
 
 const body = document.querySelector("body");
 const tagList = document.querySelector("#tag-list");
@@ -32,7 +32,7 @@ const toggleVisibility = (e) => {
 }
 
 const renderTagList = () => {
-  const allTags = getAllTags(recipeData);
+  const allTags = recipes.getAllTags(recipeData);
   allTags.forEach(tag => {
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
@@ -85,7 +85,7 @@ const renderSearchResults = (e) => {
   if (searchBox.value && checkboxes.length) {
     viewInfo.textContent = `Viewing search results for "${searchBox.value}" in selected tags:`
     values = checkboxes.map(checkbox => checkbox.value);
-    list = filterByTag(recipeData, values);
+    list = recipes.filterByTag(recipeData, values);
   } else if (searchBox.value) {
     viewInfo.textContent = `Viewing search results for "${searchBox.value}" in all recipes:`
     list = recipeData;
@@ -93,7 +93,7 @@ const renderSearchResults = (e) => {
     viewInfo.textContent = "Viewing all the recipes:"
     list = recipeData;
   }
-  const filteredList = searchRecipes(list, searchBox.value);
+  const filteredList = recipes.searchRecipes(list, searchBox.value);
   searchBox.value = "";
   if (filteredList === "Sorry, no match found") {
     recipeDisplay.textContent = "Sorry, no match found, please try different search terms."
@@ -119,7 +119,7 @@ const renderFiltered = (e) => {
       tag.appendChild(closeTag)
       selectedTags.appendChild(tag)
     });
-    const filteredList = filterByTag(recipeData, values);
+    const filteredList = recipes.filterByTag(recipeData, values);
     renderRecipes(filteredList);
   } else {
     viewInfo.textContent = "Viewing all the recipes:"
@@ -143,7 +143,6 @@ const renderChosenRecipe = (e) => {
     recipeId = Number(e.target.closest(".card").id)
   }
   const recipe = recipeData.find(recipe => recipe.id === recipeId);
-  console.log(recipe.tags)
   recipeImg.setAttribute("src", recipe.image);
   recipeImg.setAttribute("alt", recipe.name);
   recipeTitle.textContent = recipe.name;
@@ -155,15 +154,15 @@ const renderChosenRecipe = (e) => {
     recipeTags.appendChild(recipeTag)
   })
   recipeIngredientsList.textContent = "";
-  const ingredientNames = findRecipeIngredients(recipeData, recipeId, ingredientsData);
+  const ingredientNames = recipes.findRecipeIngredients(recipeData, recipeId, ingredientsData);
   recipe.ingredients.forEach((ingredient, index) => {
     const listItem = document.createElement("li");
     listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
     recipeIngredientsList.appendChild(listItem);
   });
-  recipeCost.textContent = calculateCost(recipeData, recipeId, ingredientsData).toFixed(2);
+  recipeCost.textContent = recipes.calculateCost(recipeData, recipeId, ingredientsData).toFixed(2);
   recipeInstructionsList.textContent = "";
-  const instructions = getInstructions(recipeData, recipeId);
+  const instructions = recipes.getInstructions(recipeData, recipeId);
   instructions.forEach(instruction => {
     const listItem = document.createElement("li");
     listItem.textContent = instruction;
@@ -176,12 +175,11 @@ const renderChosenRecipe = (e) => {
 }
 
 //Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
-const displayRecipes = () => {
-  console.log(`Displaying recipes now`)
-}
+// const displayRecipes = () => {
+//   console.log(`Displaying recipes now`)
+// }
 
-renderTagList();
-renderRecipes(recipeData);
+
 
 btnSearch.addEventListener("click", renderSearchResults);
 btnShowTags.addEventListener("click", toggleVisibility);
@@ -202,6 +200,11 @@ window.addEventListener("click", (e) => {
 
 
 export {
+  toggleVisibility,
   renderTagList,
-  displayRecipes,
+  renderRecipes,
+  renderSearchResults,
+  renderFiltered,
+  handleFilterTags,
+  renderChosenRecipe,
 }
