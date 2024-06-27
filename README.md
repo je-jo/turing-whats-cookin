@@ -16,7 +16,9 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 
 ## Preview
 
-![]()
+![](/screenshot1.png)
+
+![](/screenshot2.png)
 
 ## Features
 
@@ -52,6 +54,10 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 
 - [Frontend Mentor](https://www.frontendmentor.io/challenges) - Layout, filtering
 - [Robb Owen's website](https://robbowen.digital/) - Colors, typography
+
+## Credits
+
+- [Notioly by Mary Amato](https://notioly.com/) - Notion-style illustrations free pack, for the hero image.
 
 ## Helpful links
 
