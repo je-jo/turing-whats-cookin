@@ -306,3 +306,16 @@ export const testIngredientsData = [
         "estimatedCostInCents": 468
     }
 ]
+
+export const testUsersData = [
+    {
+        "name": "Saige O'Kon",
+        "id": 1,
+        "recipesToCook": []
+    },
+    {
+        "name": "Ephraim Goyette",
+        "id": 2,
+        "recipesToCook": []
+    }
+]
