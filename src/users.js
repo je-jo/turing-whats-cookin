@@ -22,8 +22,11 @@ const removeFromFavorites = (user, recipe) => {
     return user;
 }
 
+const activeUser = getRandomUser(usersData);
+
 export {
     getRandomUser,
     addToFavorites,
-    removeFromFavorites
+    removeFromFavorites,
+    activeUser
 }

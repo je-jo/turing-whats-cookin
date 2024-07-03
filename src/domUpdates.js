@@ -1,6 +1,8 @@
 import ingredientsData from './data/ingredients';
 import recipeData from './data/recipes';
+// import usersData from './data/users';
 import * as recipes from './recipes';
+import * as users from './users'
 
 const body = document.querySelector("body");
 const tagList = document.querySelector("#tag-list");
@@ -21,8 +23,30 @@ const recipeCost = document.querySelector("#recipe-cost");
 const recipeInstructionsList = document.querySelector("#recipe-instructions");
 const btnClose = document.querySelector("#btn-close");
 
+const userWelcome = document.querySelector("#user");
+userWelcome.textContent = users.activeUser.name;
+
 let checkboxes = [];
 let values = [];
+let recipe;
+
+// handle users
+
+const btnFavorite = document.querySelector("#btn-favorite");
+btnFavorite.addEventListener("click", () => {
+  users.addToFavorites(users.activeUser, recipe);
+  console.table(users.activeUser.recipesToCook);
+});
+
+const btnViewAll = document.querySelector("#btn-view-all");
+btnViewAll.addEventListener("click", () => {
+  renderRecipes(recipeData);
+})
+
+const btnViewFavorites = document.querySelector("#btn-view-fav");
+btnViewFavorites.addEventListener("click", () => {
+  renderRecipes(users.activeUser.recipesToCook)
+})
 
 // helper functions
 
@@ -137,12 +161,19 @@ const handleFilterTags = (e) => {
   }
 }
 
-const renderChosenRecipe = (e) => {
+const getChosenRecipe = (e) => {
   let recipeId;
   if (e.target.closest(".card")) {
     recipeId = Number(e.target.closest(".card").id)
   }
-  const recipe = recipeData.find(recipe => recipe.id === recipeId);
+  recipe = recipeData.find(recipe => recipe.id === recipeId);
+  console.table(recipe)
+  renderChosenRecipe();
+
+  return recipe;
+}
+
+const renderChosenRecipe = () => {
   recipeImg.setAttribute("src", recipe.image);
   recipeImg.setAttribute("alt", recipe.name);
   recipeTitle.textContent = recipe.name;
@@ -154,15 +185,15 @@ const renderChosenRecipe = (e) => {
     recipeTags.appendChild(recipeTag)
   })
   recipeIngredientsList.textContent = "";
-  const ingredientNames = recipes.findRecipeIngredients(recipeData, recipeId, ingredientsData);
+  const ingredientNames = recipes.findRecipeIngredients(recipeData, recipe.id, ingredientsData);
   recipe.ingredients.forEach((ingredient, index) => {
     const listItem = document.createElement("li");
     listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
     recipeIngredientsList.appendChild(listItem);
   });
-  recipeCost.textContent = recipes.calculateCost(recipeData, recipeId, ingredientsData).toFixed(2);
+  recipeCost.textContent = recipes.calculateCost(recipeData, recipe.id, ingredientsData).toFixed(2);
   recipeInstructionsList.textContent = "";
-  const instructions = recipes.getInstructions(recipeData, recipeId);
+  const instructions = recipes.getInstructions(recipeData, recipe.id);
   instructions.forEach(instruction => {
     const listItem = document.createElement("li");
     listItem.textContent = instruction;
@@ -171,8 +202,11 @@ const renderChosenRecipe = (e) => {
   setTimeout(() => {
     recipeModal.showModal();
     body.style.overflow = "hidden";
-  }, 100)
+  }, 100);
+
 }
+
+
 
 //Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
 // const displayRecipes = () => {
@@ -183,7 +217,7 @@ const renderChosenRecipe = (e) => {
 
 btnSearch.addEventListener("click", renderSearchResults);
 btnShowTags.addEventListener("click", toggleVisibility);
-recipeDisplay.addEventListener("click", renderChosenRecipe);
+recipeDisplay.addEventListener("click", getChosenRecipe);
 tagList.addEventListener("change", renderFiltered);
 selectedTags.addEventListener("click", handleFilterTags);
 

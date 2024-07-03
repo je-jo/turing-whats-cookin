@@ -12,6 +12,9 @@
 
 <body>
   <header>
+    <div class="user wrapper">
+      <p class="h3">Welcome <span id="user"></span>!</p>
+    </div>
     <div class="hero wrapper">
       <div class="hero-title">
         <h1>What's Cookin'?</h1>
@@ -38,6 +41,10 @@
         </fieldset>
       </form>
     </div>
+    <div class="wrapper-controls">
+      <button id="btn-view-all">View All</button>
+      <button id="btn-view-fav">View Recipes To Cook</button>
+    </div>
   </aside>
 
   <main class="wrapper">
@@ -52,7 +59,7 @@
           <img id="recipe-img" src="/images/turing-logo.png" alt="placeholder image">
           <div class="wrapper-recipe--buttons">
             <button id="btn-close">Back to recipes</button>
-            <button>Add to favorites</button>
+            <button id="btn-favorite">Add to favorites</button>
           </div>
           <h3 id="recipe-title">Recipe title</h3>
           <ul id="wrapper-tags" class="wrapper-tags"></ul>

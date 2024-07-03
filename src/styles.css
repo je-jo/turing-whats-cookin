@@ -162,7 +162,7 @@ textarea:not([rows]) {
 * {
   margin: 0;
   padding: 0;
-  /* outline: 1px solid tomato; */
+  outline: 1px solid tomato;
 }
 
 *:focus-visible {
@@ -222,7 +222,7 @@ footer {
 .wrapper {
   width: min(100%, 72rem);
   margin: 0 auto;
-  padding: 5vh clamp(1rem, 5vw, 3rem) 1rem;
+  padding: 3vh clamp(1rem, 5vw, 3rem);
 }
 
 /* typography */
@@ -230,28 +230,34 @@ footer {
 h1,
 h2,
 h3,
-h4 {
+h4,
+.h1,
+.h2,
+.h3,
+.h4 {
   font-family: "Bitter", serif;
   line-height: 1.15;
 }
 
 h2,
-h3 {
+h3,
+.h2,
+.h3 {
   margin-bottom: 1em;
   font-weight: 400;
 }
 
-h1 {
+h1, .h1 {
   font-size: var(--fs-h1);
   font-size: clamp(3rem, 2.217vw + 2.426rem, var(--fs-h1));
 }
 
-h2 {
+h2, .h2 {
   font-size: var(--fs-h2);
   font-size: clamp(2.5rem, 1.201vw + 2.189rem, var(--fs-h2));
 }
 
-h3 {
+h3, .h3 {
   font-size: var(--fs-h3);
 }
 
@@ -273,6 +279,24 @@ small {
   font-size: var(--fs-small);
 }
 
+/* user */
+
+.user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user > p {
+  margin-bottom: 0;
+}
+
+.user span {
+  font-style: italic;
+  text-decoration: underline;
+  text-decoration-thickness: 6px;
+  text-decoration-color: var(--clr-accent);
+}
+
 /* aside and form */
 
 aside {
@@ -285,7 +309,7 @@ aside {
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: flex-end;
-  padding-bottom: 5vh;
+  padding-bottom: 3vh;
   gap: 1rem;
 }
 

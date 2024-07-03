@@ -15,6 +15,6 @@ import * as users from './users'
 import * as domUpdates from './domUpdates';
 
 
-users.getRandomUser(usersData);
+
 domUpdates.renderTagList();
 domUpdates.renderRecipes(recipeData);
