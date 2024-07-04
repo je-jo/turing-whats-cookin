@@ -1,8 +1,18 @@
 import ingredientsData from './data/ingredients';
 import recipeData from './data/recipes';
-// import usersData from './data/users';
+import usersData from './data/users';
 import * as recipes from './recipes';
-import * as users from './users'
+import * as users from './users';
+
+const currentlyActive = {
+  user: users.getRandomUser(usersData),
+  list: recipeData,
+  listName: "All recipes",
+  recipe: null,
+  searchTerm: null,
+  checkboxes: [],
+  values: []
+}
 
 const body = document.querySelector("body");
 const tagList = document.querySelector("#tag-list");
@@ -24,29 +34,21 @@ const recipeInstructionsList = document.querySelector("#recipe-instructions");
 const btnClose = document.querySelector("#btn-close");
 
 const userWelcome = document.querySelector("#user");
-userWelcome.textContent = users.activeUser.name;
+userWelcome.textContent = currentlyActive.user.name;
 
-let checkboxes = [];
-let values = [];
-let recipe;
-
-// handle users
+// handle favorites
 
 const btnFavorite = document.querySelector("#btn-favorite");
 btnFavorite.addEventListener("click", () => {
-  users.addToFavorites(users.activeUser, recipe);
-  console.table(users.activeUser.recipesToCook);
+  if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
+    users.removeFromFavorites(currentlyActive.user, currentlyActive.recipe);
+    btnFavorite.textContent = "Add favorite";
+    renderRecipes(currentlyActive.list)
+  } else {
+    users.addToFavorites(currentlyActive.user, currentlyActive.recipe);
+    btnFavorite.textContent = "Remove favorite";
+  }
 });
-
-const btnViewAll = document.querySelector("#btn-view-all");
-btnViewAll.addEventListener("click", () => {
-  renderRecipes(recipeData);
-})
-
-const btnViewFavorites = document.querySelector("#btn-view-fav");
-btnViewFavorites.addEventListener("click", () => {
-  renderRecipes(users.activeUser.recipesToCook)
-})
 
 // helper functions
 
@@ -73,7 +75,46 @@ const renderTagList = () => {
   });
 };
 
-// regular functions
+// set currently active
+
+const setActiveList = (e) => {
+  if (e.target.closest("button").id === "btn-view-fav") {
+    currentlyActive.list = currentlyActive.user.recipesToCook;
+    currentlyActive.listName = "Your favorites";
+  }
+  else {
+    currentlyActive.list = recipeData;
+    currentlyActive.listName = "All recipes";
+  }
+  renderCurrentViewInfo();
+  renderRecipes(currentlyActive.list);
+  // viewInfo.textContent = `Viewing ${currentlyActive.listName}`
+}
+
+const setActiveRecipe = (e) => {
+  let recipeId;
+  if (e.target.closest(".card")) {
+    recipeId = Number(e.target.closest(".card").id)
+  }
+  if (recipeId) {
+    currentlyActive.recipe = recipeData.find(recipe => recipe.id === recipeId);
+    renderChosenRecipe();
+  }
+}
+
+// render functions
+
+const renderCurrentViewInfo = () => {
+  if (currentlyActive.values.length && currentlyActive.searchTerm) {
+    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`
+  } else if (currentlyActive.searchTerm) {
+    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName} `
+  } else if (currentlyActive.values.length) {
+    viewInfo.textContent = `Viewing ${currentlyActive.listName} filtered by selected tags:`
+  } else {
+    viewInfo.textContent = `Viewing ${currentlyActive.listName}`;
+  }
+}
 
 const renderRecipes = (list) => {
   recipeDisplay.textContent = "";
@@ -103,97 +144,32 @@ const renderRecipes = (list) => {
   })
 }
 
-const renderSearchResults = (e) => {
-  e.preventDefault();
-  let list;
-  if (searchBox.value && checkboxes.length) {
-    viewInfo.textContent = `Viewing search results for "${searchBox.value}" in selected tags:`
-    values = checkboxes.map(checkbox => checkbox.value);
-    list = recipes.filterByTag(recipeData, values);
-  } else if (searchBox.value) {
-    viewInfo.textContent = `Viewing search results for "${searchBox.value}" in all recipes:`
-    list = recipeData;
-  } else {
-    viewInfo.textContent = "Viewing all the recipes:"
-    list = recipeData;
-  }
-  const filteredList = recipes.searchRecipes(list, searchBox.value);
-  searchBox.value = "";
-  if (filteredList === "Sorry, no match found") {
-    recipeDisplay.textContent = "Sorry, no match found, please try different search terms."
-  } else {
-    renderRecipes(filteredList);
-  }
-}
-
-const renderFiltered = (e) => {
-  e.preventDefault();
-  checkboxes = [...tagList.querySelectorAll(":checked")];
-  values = checkboxes.map(checkbox => checkbox.value);
-  selectedTags.textContent = "";
-  if (values.length) {
-    viewInfo.textContent = `Viewing recipes filtered by selected tags:`;
-    values.forEach(value => {
-      const tag = document.createElement("li");
-      tag.classList.add("tag");
-      tag.textContent = value;
-      const closeTag = document.createElement("button");
-      closeTag.classList.add("btn-unselect");
-      closeTag.textContent = "x"
-      tag.appendChild(closeTag)
-      selectedTags.appendChild(tag)
-    });
-    const filteredList = recipes.filterByTag(recipeData, values);
-    renderRecipes(filteredList);
-  } else {
-    viewInfo.textContent = "Viewing all the recipes:"
-    renderRecipes(recipeData)
-  }
-}
-
-const handleFilterTags = (e) => {
-  if (e.target.closest("button")) {
-    let tagToRemove = e.target.parentNode.firstChild.textContent;
-    values.splice(values.indexOf(tagToRemove), 1);
-    const boxToUncheck = document.getElementById(tagToRemove);
-    boxToUncheck.checked = false;
-    renderFiltered(e);
-  }
-}
-
-const getChosenRecipe = (e) => {
-  let recipeId;
-  if (e.target.closest(".card")) {
-    recipeId = Number(e.target.closest(".card").id)
-  }
-  recipe = recipeData.find(recipe => recipe.id === recipeId);
-  console.table(recipe)
-  renderChosenRecipe();
-
-  return recipe;
-}
-
 const renderChosenRecipe = () => {
-  recipeImg.setAttribute("src", recipe.image);
-  recipeImg.setAttribute("alt", recipe.name);
-  recipeTitle.textContent = recipe.name;
+  recipeImg.setAttribute("src", currentlyActive.recipe.image);
+  recipeImg.setAttribute("alt", currentlyActive.recipe.name);
+  if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
+    btnFavorite.textContent = "Remove favorite";
+  } else {
+    btnFavorite.textContent = "Add favorite";
+  }
+  recipeTitle.textContent = currentlyActive.recipe.name;
   recipeTags.textContent = "";
-  recipe.tags.forEach(tag => {
+  currentlyActive.recipe.tags.forEach(tag => {
     const recipeTag = document.createElement("li");
     recipeTag.classList.add("tag");
     recipeTag.textContent = tag;
     recipeTags.appendChild(recipeTag)
   })
   recipeIngredientsList.textContent = "";
-  const ingredientNames = recipes.findRecipeIngredients(recipeData, recipe.id, ingredientsData);
-  recipe.ingredients.forEach((ingredient, index) => {
+  const ingredientNames = recipes.findRecipeIngredients(recipeData, currentlyActive.recipe.id, ingredientsData);
+  currentlyActive.recipe.ingredients.forEach((ingredient, index) => {
     const listItem = document.createElement("li");
     listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
     recipeIngredientsList.appendChild(listItem);
   });
-  recipeCost.textContent = recipes.calculateCost(recipeData, recipe.id, ingredientsData).toFixed(2);
+  recipeCost.textContent = recipes.calculateCost(recipeData, currentlyActive.recipe.id, ingredientsData).toFixed(2);
   recipeInstructionsList.textContent = "";
-  const instructions = recipes.getInstructions(recipeData, recipe.id);
+  const instructions = recipes.getInstructions(recipeData, currentlyActive.recipe.id);
   instructions.forEach(instruction => {
     const listItem = document.createElement("li");
     listItem.textContent = instruction;
@@ -203,26 +179,92 @@ const renderChosenRecipe = () => {
     recipeModal.showModal();
     body.style.overflow = "hidden";
   }, 100);
-
 }
 
+// filter and search
 
+const renderSearchResults = (e) => {
+  e.preventDefault();
+  currentlyActive.searchTerm = searchBox.value;
+
+  if (currentlyActive.searchTerm && currentlyActive.checkboxes.length) {
+    // viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`
+    currentlyActive.values = currentlyActive.checkboxes.map(checkbox => checkbox.value);
+    currentlyActive.list = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
+  } else if (currentlyActive.searchTerm) {
+    // viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName}:`
+  } else {
+    // viewInfo.textContent = `Viewing ${currentlyActive.listName}:`
+  }
+
+  const filteredList = recipes.searchRecipes(currentlyActive.list, currentlyActive.searchTerm);
+  renderCurrentViewInfo();
+  searchBox.value = "";
+  currentlyActive.searchTerm = null;
+  if (!filteredList.length) {
+    recipeDisplay.textContent = "Sorry, no match found, please try different search terms."
+  } else {
+    renderRecipes(filteredList);
+  }
+}
+
+const renderFiltered = (e) => {
+  e.preventDefault();
+  currentlyActive.checkboxes = [...tagList.querySelectorAll(":checked")];
+  currentlyActive.values = currentlyActive.checkboxes.map(checkbox => checkbox.value);
+  selectedTags.textContent = "";
+  if (currentlyActive.values.length) {
+    // viewInfo.textContent = `Viewing ${currentlyActive.listName} filtered by selected tags:`;
+    currentlyActive.values.forEach(value => {
+      const tag = document.createElement("li");
+      tag.classList.add("tag");
+      tag.textContent = value;
+      const closeTag = document.createElement("button");
+      closeTag.classList.add("btn-unselect");
+      closeTag.textContent = "x"
+      tag.appendChild(closeTag)
+      selectedTags.appendChild(tag)
+    });
+    const filteredList = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
+    renderRecipes(filteredList);
+  } else {
+    // viewInfo.textContent = `Viewing ${currentlyActive.listName}:`
+    renderRecipes(currentlyActive.list)
+  }
+  renderCurrentViewInfo();
+}
+
+const handleFilterTags = (e) => {
+  if (e.target.closest("button")) {
+    let tagToRemove = e.target.parentNode.firstChild.textContent;
+    currentlyActive.values.splice(currentlyActive.values.indexOf(tagToRemove), 1);
+    const boxToUncheck = document.getElementById(tagToRemove);
+    boxToUncheck.checked = false;
+    renderFiltered(e);
+  }
+}
 
 //Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
 // const displayRecipes = () => {
 //   console.log(`Displaying recipes now`)
 // }
 
+const btnViewAll = document.querySelector("#btn-view-all");
+btnViewAll.addEventListener("click", setActiveList)
 
+const btnViewFavorites = document.querySelector("#btn-view-fav");
+btnViewFavorites.addEventListener("click", setActiveList)
 
 btnSearch.addEventListener("click", renderSearchResults);
 btnShowTags.addEventListener("click", toggleVisibility);
-recipeDisplay.addEventListener("click", getChosenRecipe);
+recipeDisplay.addEventListener("click", setActiveRecipe);
 tagList.addEventListener("change", renderFiltered);
 selectedTags.addEventListener("click", handleFilterTags);
 
 btnClose.addEventListener("click", () => {
-  body.style.overflow = "auto"
+  body.style.overflow = "auto";
+  // renderCurrentViewInfo();
+  // renderRecipes(currentlyActive.list);
   recipeModal.close();
 });
 
@@ -233,10 +275,13 @@ window.addEventListener("click", (e) => {
 })
 
 
+
+
 export {
   toggleVisibility,
   renderTagList,
   renderRecipes,
+  renderCurrentViewInfo,
   renderSearchResults,
   renderFiltered,
   handleFilterTags,

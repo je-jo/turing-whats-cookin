@@ -187,9 +187,9 @@ describe('Recipes by tag', () => {
       ]
     }])
   });
-  it('Should return a message if no match is found', () => {
+  it('Should return an empty array if no match is found', () => {
     const noMatch = filterByTag(testRecipeData, ["non-existent tag"]);
-    expect(noMatch).to.equal("Sorry, no match found.")
+    expect(noMatch).to.deep.equal([])
   });
 })
 
@@ -341,9 +341,9 @@ describe('Recipes by name', () => {
       ]
     }]);
   });
-  it('Should return a message if no match is found', () => {
+  it('Should return an empty array if no match is found', () => {
     const noRecipe = searchRecipes(testRecipeData, "pizza")
-    expect(noRecipe).to.equal("Sorry, no match found")
+    expect(noRecipe).to.deep.equal([])
   })
 });
 
@@ -614,9 +614,9 @@ describe('Recipes by ingredient', () => {
 ])
 })
 
-  it('Should return a message if no match is found', () => {
+  it('Should return an empty array if no match is found', () => {
     const noEggz = searchRecipes(testRecipeData, "eggz")
-    expect(noEggz).to.equal("Sorry, no match found")
+    expect(noEggz).to.deep.equal([])
   })
 })
 
