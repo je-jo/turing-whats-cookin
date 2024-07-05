@@ -27,12 +27,13 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - [x] Search recipes by name;
 - [x] Search recipes by ingredient;
 - [x] Click on a recipe to view more information (directions, ingredients needed, and total cost);
-- [ ] Add/remove a recipe to a list of recipes to cook;
-- [ ] Filter recipes to cook list by multiple tags;
-- [ ] Search recipes to cook list by name;
-- [ ] Search recipes to cook list by ingredient;
+- [x] Chose user at random on load;
+- [x] Add/remove a recipe to a user's list of recipes to cook;
+- [x] Filter user's recipes to cook list by multiple tags;
+- [x] Search user's recipes to cook list by name;
+- [x] Search user's recipes to cook list by ingredient;
 - [ ] Implement fetch API for accessing the data from provided endpoints, instead of hardcoded data files;
-- [ ] Build test suite using sample dataset.
+- [x] Build test suite using sample dataset.
 
 ## Instructions
 

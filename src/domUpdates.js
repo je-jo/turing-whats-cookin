@@ -4,16 +4,6 @@ import usersData from './data/users';
 import * as recipes from './recipes';
 import * as users from './users';
 
-const currentlyActive = {
-  user: users.getRandomUser(usersData),
-  list: recipeData,
-  listName: "All recipes",
-  recipe: null,
-  searchTerm: null,
-  checkboxes: [],
-  values: []
-}
-
 const body = document.querySelector("body");
 const tagList = document.querySelector("#tag-list");
 const searchBox = document.querySelector("#search");
@@ -34,21 +24,28 @@ const recipeInstructionsList = document.querySelector("#recipe-instructions");
 const btnClose = document.querySelector("#btn-close");
 
 const userWelcome = document.querySelector("#user");
+const btnFavorite = document.querySelector("#btn-favorite");
+
+// to be replaced with radios
+const btnViewAll = document.querySelector("#btn-view-all");
+const btnViewFavorites = document.querySelector("#btn-view-fav");
+
+
+
+const currentlyActive = {
+  user: users.getRandomUser(usersData),
+  list: recipeData,
+  listName: "All recipes",
+  recipe: null,
+  searchTerm: null,
+  checkboxes: [],
+  values: []
+}
+
+
 userWelcome.textContent = currentlyActive.user.name;
 
-// handle favorites
 
-const btnFavorite = document.querySelector("#btn-favorite");
-btnFavorite.addEventListener("click", () => {
-  if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
-    users.removeFromFavorites(currentlyActive.user, currentlyActive.recipe);
-    btnFavorite.textContent = "Add favorite";
-    renderRecipes(currentlyActive.list)
-  } else {
-    users.addToFavorites(currentlyActive.user, currentlyActive.recipe);
-    btnFavorite.textContent = "Remove favorite";
-  }
-});
 
 // helper functions
 
@@ -75,10 +72,16 @@ const renderTagList = () => {
   });
 };
 
+const closeModal = () => {
+  body.style.overflow = "auto";
+  recipeModal.close();
+}
+
 // set currently active
 
 const setActiveList = (e) => {
-  if (e.target.closest("button").id === "btn-view-fav") {
+  let chosenOption = e.target.closest("button").id;
+  if (chosenOption === "btn-view-fav") {
     currentlyActive.list = currentlyActive.user.recipesToCook;
     currentlyActive.listName = "Your favorites";
   }
@@ -86,9 +89,14 @@ const setActiveList = (e) => {
     currentlyActive.list = recipeData;
     currentlyActive.listName = "All recipes";
   }
+  if (currentlyActive.values) {
+    renderFiltered(e)
+  }
+  else {
+    renderRecipes(currentlyActive.list);
+  }
   renderCurrentViewInfo();
-  renderRecipes(currentlyActive.list);
-  // viewInfo.textContent = `Viewing ${currentlyActive.listName}`
+
 }
 
 const setActiveRecipe = (e) => {
@@ -185,19 +193,12 @@ const renderChosenRecipe = () => {
 
 const renderSearchResults = (e) => {
   e.preventDefault();
+  let filteredList = currentlyActive.list;
   currentlyActive.searchTerm = searchBox.value;
-
-  if (currentlyActive.searchTerm && currentlyActive.checkboxes.length) {
-    // viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`
-    currentlyActive.values = currentlyActive.checkboxes.map(checkbox => checkbox.value);
-    currentlyActive.list = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
-  } else if (currentlyActive.searchTerm) {
-    // viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName}:`
-  } else {
-    // viewInfo.textContent = `Viewing ${currentlyActive.listName}:`
+  if (currentlyActive.values.length) {
+    filteredList = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
   }
-
-  const filteredList = recipes.searchRecipes(currentlyActive.list, currentlyActive.searchTerm);
+  filteredList = recipes.searchRecipes(filteredList, currentlyActive.searchTerm);
   renderCurrentViewInfo();
   searchBox.value = "";
   currentlyActive.searchTerm = null;
@@ -214,7 +215,6 @@ const renderFiltered = (e) => {
   currentlyActive.values = currentlyActive.checkboxes.map(checkbox => checkbox.value);
   selectedTags.textContent = "";
   if (currentlyActive.values.length) {
-    // viewInfo.textContent = `Viewing ${currentlyActive.listName} filtered by selected tags:`;
     currentlyActive.values.forEach(value => {
       const tag = document.createElement("li");
       tag.classList.add("tag");
@@ -228,8 +228,7 @@ const renderFiltered = (e) => {
     const filteredList = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
     renderRecipes(filteredList);
   } else {
-    // viewInfo.textContent = `Viewing ${currentlyActive.listName}:`
-    renderRecipes(currentlyActive.list)
+    renderRecipes(currentlyActive.list);
   }
   renderCurrentViewInfo();
 }
@@ -244,46 +243,59 @@ const handleFilterTags = (e) => {
   }
 }
 
+// handle favorites
+
+const handleFavorites = (e) => {
+  if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
+    users.removeFromFavorites(currentlyActive.user, currentlyActive.recipe);
+    btnFavorite.textContent = "Add favorite";
+    renderRecipes(currentlyActive.list)
+  } else {
+    users.addToFavorites(currentlyActive.user, currentlyActive.recipe);
+    btnFavorite.textContent = "Remove favorite";
+  }
+  if (currentlyActive.values) {
+    renderFiltered(e);
+  }
+  renderCurrentViewInfo();
+}
+
 //Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
 // const displayRecipes = () => {
 //   console.log(`Displaying recipes now`)
 // }
 
-const btnViewAll = document.querySelector("#btn-view-all");
+
+// to be replaced with radios
 btnViewAll.addEventListener("click", setActiveList)
+btnViewFavorites.addEventListener("click", setActiveList);
 
-const btnViewFavorites = document.querySelector("#btn-view-fav");
-btnViewFavorites.addEventListener("click", setActiveList)
-
+// event listeners
 btnSearch.addEventListener("click", renderSearchResults);
 btnShowTags.addEventListener("click", toggleVisibility);
 recipeDisplay.addEventListener("click", setActiveRecipe);
 tagList.addEventListener("change", renderFiltered);
 selectedTags.addEventListener("click", handleFilterTags);
-
-btnClose.addEventListener("click", () => {
-  body.style.overflow = "auto";
-  // renderCurrentViewInfo();
-  // renderRecipes(currentlyActive.list);
-  recipeModal.close();
-});
+btnFavorite.addEventListener("click", handleFavorites);
+btnClose.addEventListener("click", closeModal);
 
 window.addEventListener("click", (e) => {
   if (!e.target.closest("#btn-tags") && !e.target.closest("#tag-list")) {
     tagList.classList.add("hidden");
   }
-})
-
-
-
+});
 
 export {
   toggleVisibility,
   renderTagList,
-  renderRecipes,
+  closeModal,
+  setActiveList,
+  setActiveRecipe,
   renderCurrentViewInfo,
+  renderRecipes,
+  renderChosenRecipe,
   renderSearchResults,
   renderFiltered,
   handleFilterTags,
-  renderChosenRecipe,
+  handleFavorites
 }
