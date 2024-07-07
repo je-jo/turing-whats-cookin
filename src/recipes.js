@@ -6,10 +6,7 @@ import recipeData from "./data/recipes";
 
 const filterByTag = (list, tags) => {
   const filteredList = list.filter(recipe => tags.some(tag => recipe.tags.includes(tag)));
-  if (filteredList.length) {
-    return filteredList
-  }
-  return "Sorry, no match found."
+  return filteredList;
 }
 
 const searchRecipes = (list, searchTerm) => {
@@ -28,10 +25,7 @@ const searchRecipes = (list, searchTerm) => {
       }
     })
   });
-  if (searchResults.length) {
-    return searchResults;
-  }
-  return "Sorry, no match found"
+  return searchResults;
 }
 
 const findRecipeIngredients = (recipeList, recipeId, ingredientsList) => {
