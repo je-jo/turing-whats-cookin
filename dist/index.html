@@ -25,9 +25,12 @@
   </header>
 
   <aside class="wrapper">
-    <div class="wrapper-controls">
-      <button id="btn-view-all">View All</button>
-      <button id="btn-view-fav">View Favorites</button>
+    <div class="wrapper-controls change-view">
+      <input type="radio" id="view-all" name="view" value="all" checked>
+      <label for="view-all" class="btn">View All</label>
+      <input type="radio" id="view-fav" name="view" value="fav">
+      <label for="view-fav" class="btn">View Favorites</label>
+
     </div>
     <div class="wrapper-controls">
       <form method="get" class="wrapper-search">

@@ -26,10 +26,7 @@ const btnClose = document.querySelector("#btn-close");
 const userWelcome = document.querySelector("#user");
 const btnFavorite = document.querySelector("#btn-favorite");
 
-// to be replaced with radios
-const btnViewAll = document.querySelector("#btn-view-all");
-const btnViewFavorites = document.querySelector("#btn-view-fav");
-
+const changeView = document.querySelector(".change-view")
 
 
 const currentlyActive = {
@@ -80,12 +77,10 @@ const closeModal = () => {
 // set currently active
 
 const setActiveList = (e) => {
-  let chosenOption = e.target.closest("button").id;
-  if (chosenOption === "btn-view-fav") {
+  if (e.target.value === "fav") {
     currentlyActive.list = currentlyActive.user.recipesToCook;
     currentlyActive.listName = "Your favorites";
-  }
-  else {
+  } else if (e.target.value === "all") {
     currentlyActive.list = recipeData;
     currentlyActive.listName = "All recipes";
   }
@@ -96,7 +91,6 @@ const setActiveList = (e) => {
     renderRecipes(currentlyActive.list);
   }
   renderCurrentViewInfo();
-
 }
 
 const setActiveRecipe = (e) => {
@@ -266,11 +260,9 @@ const handleFavorites = (e) => {
 // }
 
 
-// to be replaced with radios
-btnViewAll.addEventListener("click", setActiveList)
-btnViewFavorites.addEventListener("click", setActiveList);
 
 // event listeners
+changeView.addEventListener("change", setActiveList);
 btnSearch.addEventListener("click", renderSearchResults);
 btnShowTags.addEventListener("click", toggleVisibility);
 recipeDisplay.addEventListener("click", setActiveRecipe);
