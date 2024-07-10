@@ -1,6 +1,4 @@
-import ingredientsData from './data/ingredients';
-import recipeData from './data/recipes';
-import usersData from './data/users';
+import * as data from './apiCalls'
 import * as recipes from './recipes';
 import * as users from './users';
 
@@ -30,8 +28,9 @@ const changeView = document.querySelector(".change-view");
 
 
 const currentlyActive = {
-  user: users.getRandomUser(usersData),
-  list: recipeData,
+  user: null,
+  // list: data.recipeData,
+  list: null,
   listName: "All recipes",
   recipe: null,
   searchTerm: null,
@@ -48,7 +47,7 @@ const toggleVisibility = (e) => {
 }
 
 const renderTagList = () => {
-  const allTags = recipes.getAllTags(recipeData);
+  const allTags = recipes.getAllTags(data.recipeData);
   allTags.forEach(tag => {
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
@@ -77,7 +76,7 @@ const setActiveList = (e) => {
     currentlyActive.list = currentlyActive.user.recipesToCook;
     currentlyActive.listName = "Your favorites";
   } else if (e.target.value === "all") {
-    currentlyActive.list = recipeData;
+    currentlyActive.list = data.recipeData;
     currentlyActive.listName = "All recipes";
   }
   if (currentlyActive.values) {
@@ -95,7 +94,7 @@ const setActiveRecipe = (e) => {
     recipeId = Number(e.target.closest(".card").id)
   }
   if (recipeId) {
-    currentlyActive.recipe = recipeData.find(recipe => recipe.id === recipeId);
+    currentlyActive.recipe = data.recipeData.find(recipe => recipe.id === recipeId);
     renderChosenRecipe();
   }
 }
@@ -103,6 +102,7 @@ const setActiveRecipe = (e) => {
 // render functions
 
 const renderCurrentViewInfo = () => {
+  userWelcome.textContent = currentlyActive.user.name;
   if (currentlyActive.values.length && currentlyActive.searchTerm) {
     viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`
   } else if (currentlyActive.searchTerm) {
@@ -159,15 +159,15 @@ const renderChosenRecipe = () => {
     recipeTags.appendChild(recipeTag)
   })
   recipeIngredientsList.textContent = "";
-  const ingredientNames = recipes.findRecipeIngredients(recipeData, currentlyActive.recipe.id, ingredientsData);
+  const ingredientNames = recipes.findRecipeIngredients(data.recipeData, currentlyActive.recipe.id, data.ingredientsData);
   currentlyActive.recipe.ingredients.forEach((ingredient, index) => {
     const listItem = document.createElement("li");
     listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
     recipeIngredientsList.appendChild(listItem);
   });
-  recipeCost.textContent = recipes.calculateCost(recipeData, currentlyActive.recipe.id, ingredientsData).toFixed(2);
+  recipeCost.textContent = recipes.calculateCost(data.recipeData, currentlyActive.recipe.id, data.ingredientsData).toFixed(2);
   recipeInstructionsList.textContent = "";
-  const instructions = recipes.getInstructions(recipeData, currentlyActive.recipe.id);
+  const instructions = recipes.getInstructions(data.recipeData, currentlyActive.recipe.id);
   instructions.forEach(instruction => {
     const listItem = document.createElement("li");
     listItem.textContent = instruction;
@@ -273,14 +273,21 @@ window.addEventListener("click", (e) => {
   }
 });
 
-window.addEventListener("load", () => {
-  userWelcome.textContent = currentlyActive.user.name;
-  renderTagList();
-  renderCurrentViewInfo();
-  renderRecipes(recipeData);
-})
+// window.addEventListener("load", () => {
+//   setTimeout(() => {
+//     // currentlyActive.user = users.getRandomUser(data.usersData)
+//     // console.log(currentlyActive.user)
+//     // userWelcome.textContent = currentlyActive.user.name;
+//     // renderTagList();
+//     // renderCurrentViewInfo();
+//     // renderRecipes(data.recipeData);
+//   }, 500);
+
+// })
 
 export {
+  currentlyActive,
+  recipeDisplay,
   toggleVisibility,
   renderTagList,
   closeModal,

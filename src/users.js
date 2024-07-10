@@ -1,5 +1,3 @@
-import usersData from "./data/users";
-
 const getRandomUser = (userList) => {
     let randomIndex =  Math.floor(Math.random() * userList.length);
     let randomUser = userList[randomIndex];
