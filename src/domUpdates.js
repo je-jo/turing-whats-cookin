@@ -26,7 +26,7 @@ const btnClose = document.querySelector("#btn-close");
 const userWelcome = document.querySelector("#user");
 const btnFavorite = document.querySelector("#btn-favorite");
 
-const changeView = document.querySelector(".change-view")
+const changeView = document.querySelector(".change-view");
 
 
 const currentlyActive = {
@@ -38,10 +38,6 @@ const currentlyActive = {
   checkboxes: [],
   values: []
 }
-
-
-userWelcome.textContent = currentlyActive.user.name;
-
 
 
 // helper functions
@@ -276,6 +272,13 @@ window.addEventListener("click", (e) => {
     tagList.classList.add("hidden");
   }
 });
+
+window.addEventListener("load", () => {
+  userWelcome.textContent = currentlyActive.user.name;
+  renderTagList();
+  renderCurrentViewInfo();
+  renderRecipes(recipeData);
+})
 
 export {
   toggleVisibility,

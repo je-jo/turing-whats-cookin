@@ -4,6 +4,7 @@ import './styles.css';
 import apiCalls from './apiCalls';
 import './images/turing-logo.png';
 import './images/3.Nutritionist.svg';
+import './images/favicon-32x32.png';
 import recipeData from './data/recipes';
 import usersData from './data/users';
 // import ingredientsData from './data/ingredients'
@@ -16,6 +17,3 @@ import * as domUpdates from './domUpdates';
 
 
 
-domUpdates.renderTagList();
-domUpdates.renderCurrentViewInfo();
-domUpdates.renderRecipes(recipeData);
