@@ -1,9 +1,8 @@
 //Here is an example demonstrating logic separated that can be imported into the scripts and test files. Feel free to update this later! 
 
 // import ingredientsData from "./data/ingredients";
-import * as data from './apiCalls'
+import { ingredientsData } from './apiCalls'
 // import recipeData from "./data/recipes";
-
 
 const filterByTag = (list, tags) => {
   const filteredList = list.filter(recipe => tags.some(tag => recipe.tags.includes(tag)));
@@ -19,7 +18,7 @@ const searchRecipes = (list, searchTerm) => {
   });
   searchResults = recipeByName;
   list.forEach(recipe => {
-    const ingredients = findRecipeIngredients(list, recipe.id, data.ingredientsData);
+    const ingredients = findRecipeIngredients(list, recipe.id, ingredientsData);
     ingredients.forEach(ingredient => {
       if (ingredient.includes(lowercasedSearchTerm) && !searchResults.includes(recipe)) {
         searchResults.push(recipe)

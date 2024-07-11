@@ -29,7 +29,6 @@ const changeView = document.querySelector(".change-view");
 
 const currentlyActive = {
   user: null,
-  // list: data.recipeData,
   list: null,
   listName: "All recipes",
   recipe: null,
@@ -273,17 +272,20 @@ window.addEventListener("click", (e) => {
   }
 });
 
-// window.addEventListener("load", () => {
-//   setTimeout(() => {
-//     // currentlyActive.user = users.getRandomUser(data.usersData)
-//     // console.log(currentlyActive.user)
-//     // userWelcome.textContent = currentlyActive.user.name;
-//     // renderTagList();
-//     // renderCurrentViewInfo();
-//     // renderRecipes(data.recipeData);
-//   }, 500);
-
-// })
+Promise.all([data.getUsers, data.getRecipes, data.getIngredients])
+    .then(() => {
+        setTimeout(() => {
+            currentlyActive.user = users.getRandomUser(data.usersData);
+            currentlyActive.list = data.recipeData;
+            renderTagList();
+            renderCurrentViewInfo();
+            renderRecipes(data.recipeData);
+        }, 500)
+    })
+    .catch(err => {
+        console.log(`Sorry, the following error occured: ${err}`)
+        recipeDisplay.textContent = `Sorry, the following error occured: ${err}`
+    })
 
 export {
   currentlyActive,

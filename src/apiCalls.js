@@ -8,52 +8,30 @@ const usersData = [];
 const recipeData = [];
 const ingredientsData = [];
 
-import * as domUpdates from './domUpdates';
+// import * as domUpdates from './domUpdates';
 import * as users from './users';
 
-const getUsers = fetch(urlUsers)
-.then(response => response.json())
-.then(data => {
-    data.users.forEach(item => {
-        usersData.push(item)
-    })
-    domUpdates.currentlyActive.user = users.getRandomUser(usersData);
-})
-.catch(err => {
-    console.log(`Sorry, the following error occured: ${err}`)
-    domUpdates.recipeDisplay.textContent = `Sorry, the following error occured: ${err}`
-})
+const getData = (url, items, container) => {
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            data[items].forEach(item => {
+                container.push(item)
+            })
+        })
+        .catch(err => {
+            console.log(`Sorry, the following error occured: ${err}`)
+        })
+}
 
-
-const getRecipes = fetch(urlRecipes)
-.then(response => response.json())
-.then(data => {
-    data.recipes.forEach(item => {
-        recipeData.push(item)
-    })
-    domUpdates.currentlyActive.list = recipeData;
-    domUpdates.renderTagList();
-    domUpdates.renderCurrentViewInfo();
-    domUpdates.renderRecipes(recipeData)
-})
-.catch(err => {
-    console.log(`Sorry, the following error occured: ${err}`)
-    domUpdates.recipeDisplay.textContent = `Sorry, the following error occured: ${err}`
-})
-
-const getIngredients = fetch(urlIngredients)
-.then(response => response.json())
-.then(data => {
-    data.ingredients.forEach(item => {
-        ingredientsData.push(item)
-    })
-})
-.catch(err => {
-    console.log(`Sorry, the following error occured: ${err}`)
-    domUpdates.recipeDisplay.textContent = `Sorry, the following error occured: ${err}`
-});
+const getUsers = getData(urlUsers, "users", usersData);
+const getRecipes = getData(urlRecipes, "recipes", recipeData);
+const getIngredients = getData(urlIngredients, "ingredients", ingredientsData);
 
 export {
+    getUsers,
+    getRecipes,
+    getIngredients,
     usersData,
     recipeData,
     ingredientsData
