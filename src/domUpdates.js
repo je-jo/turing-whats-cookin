@@ -23,6 +23,7 @@ const btnClose = document.querySelector("#btn-close");
 
 const userWelcome = document.querySelector("#user");
 const btnFavorite = document.querySelector("#btn-favorite");
+const btnFavoriteText = document.querySelector("#btn-favorite-txt");
 
 const changeView = document.querySelector(".change-view");
 
@@ -144,9 +145,9 @@ const renderChosenRecipe = () => {
   recipeImg.setAttribute("src", currentlyActive.recipe.image);
   recipeImg.setAttribute("alt", currentlyActive.recipe.name);
   if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
-    btnFavorite.textContent = "Remove favorite";
+    btnFavoriteText.textContent = "Remove favorite";
   } else {
-    btnFavorite.textContent = "Add favorite";
+    btnFavoriteText.textContent = "Add favorite";
   }
   recipeTitle.textContent = currentlyActive.recipe.name;
   recipeTags.textContent = "";
@@ -236,11 +237,11 @@ const handleFilterTags = (e) => {
 const handleFavorites = (e) => {
   if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
     users.removeFromFavorites(currentlyActive.user, currentlyActive.recipe);
-    btnFavorite.textContent = "Add favorite";
+    btnFavoriteText.textContent = "Add favorite";
     renderRecipes(currentlyActive.list);
   } else {
     users.addToFavorites(currentlyActive.user, currentlyActive.recipe);
-    btnFavorite.textContent = "Remove favorite";
+    btnFavoriteText.textContent = "Remove favorite";
   }
   if (currentlyActive.values) {
     renderFiltered(e);
