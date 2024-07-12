@@ -1,4 +1,4 @@
-import * as data from './apiCalls'
+import * as data from './apiCalls';
 import * as recipes from './recipes';
 import * as users from './users';
 
@@ -35,15 +35,15 @@ const currentlyActive = {
   searchTerm: null,
   checkboxes: [],
   values: []
-}
+};
 
 
 // helper functions
 
 const toggleVisibility = (e) => {
-  e.preventDefault()
-  tagList.classList.toggle("hidden")
-}
+  e.preventDefault();
+  tagList.classList.toggle("hidden");
+};
 
 const renderTagList = () => {
   const allTags = recipes.getAllTags(data.recipeData);
@@ -53,12 +53,12 @@ const renderTagList = () => {
     checkbox.setAttribute("id", tag);
     checkbox.setAttribute("value", tag);
     const label = document.createElement("label");
-    label.setAttribute("for", tag)
+    label.setAttribute("for", tag);
     label.textContent = tag;
     const listItem = document.createElement("li");
     listItem.classList.add("form-control");
-    listItem.appendChild(checkbox)
-    listItem.appendChild(label)
+    listItem.appendChild(checkbox);
+    listItem.appendChild(label);
     tagList.appendChild(listItem);
   });
 };
@@ -66,7 +66,7 @@ const renderTagList = () => {
 const closeModal = () => {
   body.style.overflow = "auto";
   recipeModal.close();
-}
+};
 
 // set currently active
 
@@ -79,39 +79,38 @@ const setActiveList = (e) => {
     currentlyActive.listName = "All recipes";
   }
   if (currentlyActive.values) {
-    renderFiltered(e)
-  }
-  else {
+    renderFiltered(e);
+  } else {
     renderRecipes(currentlyActive.list);
   }
   renderCurrentViewInfo();
-}
+};
 
 const setActiveRecipe = (e) => {
   let recipeId;
   if (e.target.closest(".card")) {
-    recipeId = Number(e.target.closest(".card").id)
+    recipeId = Number(e.target.closest(".card").id);
   }
   if (recipeId) {
     currentlyActive.recipe = data.recipeData.find(recipe => recipe.id === recipeId);
     renderChosenRecipe();
   }
-}
+};
 
 // render functions
 
 const renderCurrentViewInfo = () => {
   userWelcome.textContent = currentlyActive.user.name;
   if (currentlyActive.values.length && currentlyActive.searchTerm) {
-    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`
+    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`;
   } else if (currentlyActive.searchTerm) {
-    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName} `
+    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName} `;
   } else if (currentlyActive.values.length) {
-    viewInfo.textContent = `Viewing ${currentlyActive.listName} filtered by selected tags:`
+    viewInfo.textContent = `Viewing ${currentlyActive.listName} filtered by selected tags:`;
   } else {
     viewInfo.textContent = `Viewing ${currentlyActive.listName}`;
   }
-}
+};
 
 const renderRecipes = (list) => {
   recipeDisplay.textContent = "";
@@ -130,16 +129,16 @@ const renderRecipes = (list) => {
       tagSpan.classList.add("tag");
       tagSpan.textContent = tag;
       tagBox.appendChild(tagSpan);
-    })
+    });
     const listItem = document.createElement("li");
-    listItem.setAttribute("id", recipe.id)
+    listItem.setAttribute("id", recipe.id);
     listItem.classList.add("card");
     listItem.appendChild(image);
     listItem.appendChild(title);
     listItem.appendChild(tagBox);
     recipeDisplay.appendChild(listItem);
-  })
-}
+  });
+};
 
 const renderChosenRecipe = () => {
   recipeImg.setAttribute("src", currentlyActive.recipe.image);
@@ -155,8 +154,8 @@ const renderChosenRecipe = () => {
     const recipeTag = document.createElement("li");
     recipeTag.classList.add("tag");
     recipeTag.textContent = tag;
-    recipeTags.appendChild(recipeTag)
-  })
+    recipeTags.appendChild(recipeTag);
+  });
   recipeIngredientsList.textContent = "";
   const ingredientNames = recipes.findRecipeIngredients(data.recipeData, currentlyActive.recipe.id, data.ingredientsData);
   currentlyActive.recipe.ingredients.forEach((ingredient, index) => {
@@ -176,7 +175,7 @@ const renderChosenRecipe = () => {
     recipeModal.showModal();
     body.style.overflow = "hidden";
   }, 100);
-}
+};
 
 // filter and search
 
@@ -192,11 +191,11 @@ const renderSearchResults = (e) => {
   searchBox.value = "";
   currentlyActive.searchTerm = null;
   if (!filteredList.length) {
-    recipeDisplay.textContent = "Sorry, no match found, please try different search terms."
+    recipeDisplay.textContent = "Sorry, no match found, please try different search terms.";
   } else {
     renderRecipes(filteredList);
   }
-}
+};
 
 const renderFiltered = (e) => {
   e.preventDefault();
@@ -210,9 +209,9 @@ const renderFiltered = (e) => {
       tag.textContent = value;
       const closeTag = document.createElement("button");
       closeTag.classList.add("btn-unselect");
-      closeTag.textContent = "x"
-      tag.appendChild(closeTag)
-      selectedTags.appendChild(tag)
+      closeTag.textContent = "x";
+      tag.appendChild(closeTag);
+      selectedTags.appendChild(tag);
     });
     const filteredList = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
     renderRecipes(filteredList);
@@ -220,7 +219,7 @@ const renderFiltered = (e) => {
     renderRecipes(currentlyActive.list);
   }
   renderCurrentViewInfo();
-}
+};
 
 const handleFilterTags = (e) => {
   if (e.target.closest("button")) {
@@ -230,7 +229,7 @@ const handleFilterTags = (e) => {
     boxToUncheck.checked = false;
     renderFiltered(e);
   }
-}
+};
 
 // handle favorites
 
@@ -238,7 +237,7 @@ const handleFavorites = (e) => {
   if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
     users.removeFromFavorites(currentlyActive.user, currentlyActive.recipe);
     btnFavorite.textContent = "Add favorite";
-    renderRecipes(currentlyActive.list)
+    renderRecipes(currentlyActive.list);
   } else {
     users.addToFavorites(currentlyActive.user, currentlyActive.recipe);
     btnFavorite.textContent = "Remove favorite";
@@ -247,7 +246,7 @@ const handleFavorites = (e) => {
     renderFiltered(e);
   }
   renderCurrentViewInfo();
-}
+};
 
 // event listeners
 changeView.addEventListener("change", setActiveList);
@@ -268,18 +267,18 @@ window.addEventListener("click", (e) => {
 window.addEventListener("load", () => {
   Promise.all([data.getUsers, data.getRecipes, data.getIngredients])
     .then(() => {
-        setTimeout(() => {
-            currentlyActive.user = users.getRandomUser(data.usersData);
-            currentlyActive.list = data.recipeData;
-            renderTagList();
-            renderCurrentViewInfo();
-            renderRecipes(data.recipeData);
-        }, 500)
+      setTimeout(() => {
+        currentlyActive.user = users.getRandomUser(data.usersData);
+        currentlyActive.list = data.recipeData;
+        renderTagList();
+        renderCurrentViewInfo();
+        renderRecipes(data.recipeData);
+      }, 500);
     })
     .catch(err => {
-        console.log(`Sorry, the following error occured: ${err}`)
-        recipeDisplay.textContent = `Sorry, the following error occured: ${err}`
-    })
+      console.log(`Sorry, the following error occured: ${err}`);
+      recipeDisplay.textContent = `Sorry, the following error occured: ${err}`;
+    });
 });
 
 export {
@@ -297,4 +296,4 @@ export {
   renderFiltered,
   handleFilterTags,
   handleFavorites
-}
+};

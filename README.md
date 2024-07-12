@@ -31,7 +31,7 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - [x] Filter user's recipes to cook list by multiple tags;
 - [x] Search user's recipes to cook list by name;
 - [x] Search user's recipes to cook list by ingredient;
-- [ ] Implement fetch API for accessing the data from provided endpoints, instead of hardcoded data files;
+- [x] Implement fetch API for accessing the data from provided endpoints, instead of hardcoded data files;
 - [x] Build test suite using sample dataset;
 - [x] Extension - Filter by multiple tags;
 - [x] Extension - Search by name or ingredient;
