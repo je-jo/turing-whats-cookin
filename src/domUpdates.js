@@ -1,6 +1,4 @@
-import ingredientsData from './data/ingredients';
-import recipeData from './data/recipes';
-import usersData from './data/users';
+import * as data from './apiCalls';
 import * as recipes from './recipes';
 import * as users from './users';
 
@@ -30,37 +28,37 @@ const changeView = document.querySelector(".change-view");
 
 
 const currentlyActive = {
-  user: users.getRandomUser(usersData),
-  list: recipeData,
+  user: null,
+  list: null,
   listName: "All recipes",
   recipe: null,
   searchTerm: null,
   checkboxes: [],
   values: []
-}
+};
 
 
 // helper functions
 
 const toggleVisibility = (e) => {
-  e.preventDefault()
-  tagList.classList.toggle("hidden")
-}
+  e.preventDefault();
+  tagList.classList.toggle("hidden");
+};
 
 const renderTagList = () => {
-  const allTags = recipes.getAllTags(recipeData);
+  const allTags = recipes.getAllTags(data.recipeData);
   allTags.forEach(tag => {
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("id", tag);
     checkbox.setAttribute("value", tag);
     const label = document.createElement("label");
-    label.setAttribute("for", tag)
+    label.setAttribute("for", tag);
     label.textContent = tag;
     const listItem = document.createElement("li");
     listItem.classList.add("form-control");
-    listItem.appendChild(checkbox)
-    listItem.appendChild(label)
+    listItem.appendChild(checkbox);
+    listItem.appendChild(label);
     tagList.appendChild(listItem);
   });
 };
@@ -68,7 +66,7 @@ const renderTagList = () => {
 const closeModal = () => {
   body.style.overflow = "auto";
   recipeModal.close();
-}
+};
 
 // set currently active
 
@@ -77,42 +75,42 @@ const setActiveList = (e) => {
     currentlyActive.list = currentlyActive.user.recipesToCook;
     currentlyActive.listName = "Your favorites";
   } else if (e.target.value === "all") {
-    currentlyActive.list = recipeData;
+    currentlyActive.list = data.recipeData;
     currentlyActive.listName = "All recipes";
   }
   if (currentlyActive.values) {
-    renderFiltered(e)
-  }
-  else {
+    renderFiltered(e);
+  } else {
     renderRecipes(currentlyActive.list);
   }
   renderCurrentViewInfo();
-}
+};
 
 const setActiveRecipe = (e) => {
   let recipeId;
   if (e.target.closest(".card")) {
-    recipeId = Number(e.target.closest(".card").id)
+    recipeId = Number(e.target.closest(".card").id);
   }
   if (recipeId) {
-    currentlyActive.recipe = recipeData.find(recipe => recipe.id === recipeId);
+    currentlyActive.recipe = data.recipeData.find(recipe => recipe.id === recipeId);
     renderChosenRecipe();
   }
-}
+};
 
 // render functions
 
 const renderCurrentViewInfo = () => {
+  userWelcome.textContent = currentlyActive.user.name;
   if (currentlyActive.values.length && currentlyActive.searchTerm) {
-    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`
+    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`;
   } else if (currentlyActive.searchTerm) {
-    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName} `
+    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName} `;
   } else if (currentlyActive.values.length) {
-    viewInfo.textContent = `Viewing ${currentlyActive.listName} filtered by selected tags:`
+    viewInfo.textContent = `Viewing ${currentlyActive.listName} filtered by selected tags:`;
   } else {
     viewInfo.textContent = `Viewing ${currentlyActive.listName}`;
   }
-}
+};
 
 const renderRecipes = (list) => {
   recipeDisplay.textContent = "";
@@ -131,16 +129,16 @@ const renderRecipes = (list) => {
       tagSpan.classList.add("tag");
       tagSpan.textContent = tag;
       tagBox.appendChild(tagSpan);
-    })
+    });
     const listItem = document.createElement("li");
-    listItem.setAttribute("id", recipe.id)
+    listItem.setAttribute("id", recipe.id);
     listItem.classList.add("card");
     listItem.appendChild(image);
     listItem.appendChild(title);
     listItem.appendChild(tagBox);
     recipeDisplay.appendChild(listItem);
-  })
-}
+  });
+};
 
 const renderChosenRecipe = () => {
   recipeImg.setAttribute("src", currentlyActive.recipe.image);
@@ -156,18 +154,18 @@ const renderChosenRecipe = () => {
     const recipeTag = document.createElement("li");
     recipeTag.classList.add("tag");
     recipeTag.textContent = tag;
-    recipeTags.appendChild(recipeTag)
-  })
+    recipeTags.appendChild(recipeTag);
+  });
   recipeIngredientsList.textContent = "";
-  const ingredientNames = recipes.findRecipeIngredients(recipeData, currentlyActive.recipe.id, ingredientsData);
+  const ingredientNames = recipes.findRecipeIngredients(data.recipeData, currentlyActive.recipe.id, data.ingredientsData);
   currentlyActive.recipe.ingredients.forEach((ingredient, index) => {
     const listItem = document.createElement("li");
     listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
     recipeIngredientsList.appendChild(listItem);
   });
-  recipeCost.textContent = recipes.calculateCost(recipeData, currentlyActive.recipe.id, ingredientsData).toFixed(2);
+  recipeCost.textContent = recipes.calculateCost(data.recipeData, currentlyActive.recipe.id, data.ingredientsData).toFixed(2);
   recipeInstructionsList.textContent = "";
-  const instructions = recipes.getInstructions(recipeData, currentlyActive.recipe.id);
+  const instructions = recipes.getInstructions(data.recipeData, currentlyActive.recipe.id);
   instructions.forEach(instruction => {
     const listItem = document.createElement("li");
     listItem.textContent = instruction;
@@ -177,7 +175,7 @@ const renderChosenRecipe = () => {
     recipeModal.showModal();
     body.style.overflow = "hidden";
   }, 100);
-}
+};
 
 // filter and search
 
@@ -188,16 +186,16 @@ const renderSearchResults = (e) => {
   if (currentlyActive.values.length) {
     filteredList = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
   }
-  filteredList = recipes.searchRecipes(filteredList, currentlyActive.searchTerm);
+  filteredList = recipes.searchRecipes(filteredList, currentlyActive.searchTerm, data.ingredientsData);
   renderCurrentViewInfo();
   searchBox.value = "";
   currentlyActive.searchTerm = null;
   if (!filteredList.length) {
-    recipeDisplay.textContent = "Sorry, no match found, please try different search terms."
+    recipeDisplay.textContent = "Sorry, no match found, please try different search terms.";
   } else {
     renderRecipes(filteredList);
   }
-}
+};
 
 const renderFiltered = (e) => {
   e.preventDefault();
@@ -211,9 +209,9 @@ const renderFiltered = (e) => {
       tag.textContent = value;
       const closeTag = document.createElement("button");
       closeTag.classList.add("btn-unselect");
-      closeTag.textContent = "x"
-      tag.appendChild(closeTag)
-      selectedTags.appendChild(tag)
+      closeTag.textContent = "x";
+      tag.appendChild(closeTag);
+      selectedTags.appendChild(tag);
     });
     const filteredList = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
     renderRecipes(filteredList);
@@ -221,7 +219,7 @@ const renderFiltered = (e) => {
     renderRecipes(currentlyActive.list);
   }
   renderCurrentViewInfo();
-}
+};
 
 const handleFilterTags = (e) => {
   if (e.target.closest("button")) {
@@ -231,7 +229,7 @@ const handleFilterTags = (e) => {
     boxToUncheck.checked = false;
     renderFiltered(e);
   }
-}
+};
 
 // handle favorites
 
@@ -239,7 +237,7 @@ const handleFavorites = (e) => {
   if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
     users.removeFromFavorites(currentlyActive.user, currentlyActive.recipe);
     btnFavorite.textContent = "Add favorite";
-    renderRecipes(currentlyActive.list)
+    renderRecipes(currentlyActive.list);
   } else {
     users.addToFavorites(currentlyActive.user, currentlyActive.recipe);
     btnFavorite.textContent = "Remove favorite";
@@ -248,14 +246,7 @@ const handleFavorites = (e) => {
     renderFiltered(e);
   }
   renderCurrentViewInfo();
-}
-
-//Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
-// const displayRecipes = () => {
-//   console.log(`Displaying recipes now`)
-// }
-
-
+};
 
 // event listeners
 changeView.addEventListener("change", setActiveList);
@@ -274,13 +265,25 @@ window.addEventListener("click", (e) => {
 });
 
 window.addEventListener("load", () => {
-  userWelcome.textContent = currentlyActive.user.name;
-  renderTagList();
-  renderCurrentViewInfo();
-  renderRecipes(recipeData);
-})
+  Promise.all([data.getUsers, data.getRecipes, data.getIngredients])
+    .then(() => {
+      setTimeout(() => {
+        currentlyActive.user = users.getRandomUser(data.usersData);
+        currentlyActive.list = data.recipeData;
+        renderTagList();
+        renderCurrentViewInfo();
+        renderRecipes(data.recipeData);
+      }, 500);
+    })
+    .catch(err => {
+      console.log(`Sorry, the following error occured: ${err}`);
+      recipeDisplay.textContent = `Sorry, the following error occured: ${err}`;
+    });
+});
 
 export {
+  currentlyActive,
+  recipeDisplay,
   toggleVisibility,
   renderTagList,
   closeModal,
@@ -293,4 +296,4 @@ export {
   renderFiltered,
   handleFilterTags,
   handleFavorites
-}
+};
