@@ -12,8 +12,10 @@
 
 <body>
   <header>
-    <div class="user wrapper">
-      <p class="h3">Welcome <span id="user">...</span>!</p>
+    <div class="user wrapper h3">
+      <p class="h3">Welcome</p>
+      <img src="/images/account_circle_48dp_47280B_FILL1_wght400_GRAD0_opsz48.svg" class="avatar" width="48" height="48">
+      <span id="user">...</span>
     </div>
     <div class="hero wrapper">
       <div class="hero-title">
@@ -27,9 +29,9 @@
   <aside class="wrapper">
     <div class="wrapper-controls change-view">
       <input type="radio" id="view-all" name="view" value="all" checked>
-      <label for="view-all" class="btn">View All</label>
+      <label for="view-all" class="btn"><img src="/images/all_inclusive_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">View All</label>
       <input type="radio" id="view-fav" name="view" value="fav">
-      <label for="view-fav" class="btn">View Favorites</label>
+      <label for="view-fav" class="btn"><img src="/images/favorite_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">View Favorites</label>
 
     </div>
     <div class="wrapper-controls">
@@ -37,12 +39,12 @@
         <label for="search">Search recipes:
           <input id="search" type="text" placeholder="Name or ingredient" maxlength="20">
         </label>
-        <button id="btn-search">Search</button>
+        <button id="btn-search"><img src="/images/search_16dp_47280B_FILL1_wght400_GRAD0_opsz20.svg" alt="">Search</button>
       </form>
       <form method="get" class="wrapper-filter">
         <fieldset>
           <legend class="sr-only">Filter recipes by tag:</legend>
-          <button id="btn-tags">Show tags</button>
+          <button id="btn-tags"><img src="/images/bookmark_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">Show tags</button>
           <ul class="tag-list hidden" id="tag-list" role="list">
           </ul>
         </fieldset>
@@ -62,7 +64,7 @@
         <div class="wrapper-recipe--header">
           <img id="recipe-img" src="/images/turing-logo.png" alt="placeholder image">
           <div class="wrapper-recipe--buttons">
-            <button id="btn-close">Back to recipes</button>
+            <button id="btn-close"><img src="/images/arrow_back_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">Back to recipes</button>
             <button id="btn-favorite">Favorite</button>
           </div>
           <h3 id="recipe-title">Recipe title</h3>

@@ -18,7 +18,7 @@ export default [
       "indent": ["warn", 2],
       "key-spacing": ["error", { "beforeColon": false, "afterColon": true }],
       "keyword-spacing": ["error", { "before": true, "after": true }],
-      "linebreak-style": ["error", "unix"],
+      "linebreak-style": ["warn", "unix"],
       "max-len": ["warn", 80],
       "new-cap": ["error", { "newIsCap": true }],
       "object-shorthand": ["error", "always"],

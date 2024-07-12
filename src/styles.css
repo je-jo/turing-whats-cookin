@@ -149,12 +149,13 @@ textarea:not([rows]) {
   --fs-text: 1.15rem;
   --fs-small: 0.875rem;
   --clr-white: hsl(0, 0%, 100%);
-  --clr-light: hsl(30, 50%, 98%);
-  --clr-primary: hsl(35, 100%, 82%);
-  --clr-text: hsl(29, 73%, 16%);
+  --clr-light: #fcfaf7;
+  --clr-primary: #ffd9a3;
+  --clr-text: #47280b;
   --clr-accent: hsl(19, 100%, 52%);
   --col-width: 16rem;
   --col-width: clamp(15rem, 16.667vw + 11.667rem, 20rem);
+  --transition: ease all .3s;
 }
 
 /* utilities */
@@ -193,10 +194,26 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   color: var(--clr-text);
   background-color: var(--clr-light);
+  
 }
 
 header {
   background-color: var(--clr-primary);
+  background-image: linear-gradient(
+    0deg,
+    hsl(35deg 100% 82%) 0%,
+    hsl(36deg 95% 83%) 19%,
+    hsl(36deg 90% 85%) 27%,
+    hsl(35deg 86% 86%) 34%,
+    hsl(35deg 81% 88%) 41%,
+    hsl(35deg 75% 89%) 47%,
+    hsl(35deg 71% 91%) 53%,
+    hsl(35deg 65% 92%) 59%,
+    hsl(36deg 59% 93%) 66%,
+    hsl(39deg 54% 95%) 73%,
+    hsl(40deg 47% 96%) 81%,
+    hsl(36deg 45% 98%) 100%
+  );
 }
 
 .hero {
@@ -285,6 +302,8 @@ small {
 .user {
   display: flex;
   justify-content: flex-end;
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .user > p {
@@ -296,6 +315,11 @@ small {
   text-decoration: underline;
   text-decoration-thickness: 6px;
   text-decoration-color: var(--clr-accent);
+}
+
+.avatar {
+  display: inline;
+  margin: 0 1rem;
 }
 
 /* aside and form */
@@ -398,9 +422,10 @@ ul.recipe-list {
   flex-direction: column;
   max-width: var(--col-width);
   background-color: var(--clr-white);
-  border: 1px solid var(--clr-primary);
+  /* border: 1px solid var(--clr-primary); */
   border-radius: 1rem;
   overflow: hidden;
+
 }
 
 .card:hover {
@@ -504,6 +529,7 @@ button, .btn {
   align-items: center;
   align-self: start;
   justify-content: center;
+  gap: 0.5em;
   min-width: 157px;
   min-height: 44px;
   padding: 0.25em 1em;
@@ -522,8 +548,10 @@ button, .btn {
   cursor: pointer;
 }
 
-button:hover {
+button:hover,
+input[type="radio"]:not(:checked)+label:hover {
   background-color: var(--clr-primary);
+  transition: var(--transition);
 }
 
 .btn-unselect {

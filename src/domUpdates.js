@@ -100,7 +100,7 @@ const setActiveRecipe = (e) => {
 // render functions
 
 const renderCurrentViewInfo = () => {
-  userWelcome.textContent = currentlyActive.user.name;
+  userWelcome.textContent = `${currentlyActive.user.name}!`;
   if (currentlyActive.values.length && currentlyActive.searchTerm) {
     viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`;
   } else if (currentlyActive.searchTerm) {
