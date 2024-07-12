@@ -4,7 +4,7 @@ import { filterByTag, searchRecipes, findRecipeIngredients, calculateCost, getIn
 
 
 
-describe('Recipes by tag', () => {
+describe('Filter recipes by tag', () => {
   it('Should return a filtered list of recipes based on a tag', () => {
     const sideDishes = filterByTag(testRecipeData, ["side dish"]);
     expect(sideDishes).to.deep.equal([
@@ -193,9 +193,9 @@ describe('Recipes by tag', () => {
   });
 })
 
-describe('Recipes by name', () => {
+describe('Search recipes by name', () => {
   it('Should return a filtered list of recipes based on recipe\'s name', () => {
-    const ambrosiaCupcakes = searchRecipes(testRecipeData, "Ambrosia Cupcake")
+    const ambrosiaCupcakes = searchRecipes(testRecipeData, "Ambrosia Cupcake", testIngredientsData)
     expect(ambrosiaCupcakes).to.deep.equal([{
       "id": 507921,
       "image": "https://spoonacular.com/recipeImages/507921-556x370.jpg",
@@ -228,7 +228,7 @@ describe('Recipes by name', () => {
     }]);
   });
   it('Should return a filtered list of recipes based on recipe\'s name regardless of case', () => {
-    const ambrosiaCupcakesLowered = searchRecipes(testRecipeData, "ambro")
+    const ambrosiaCupcakesLowered = searchRecipes(testRecipeData, "ambro", testIngredientsData)
     expect(ambrosiaCupcakesLowered).to.deep.equal([{
       "id": 507921,
       "image": "https://spoonacular.com/recipeImages/507921-556x370.jpg",
@@ -261,7 +261,7 @@ describe('Recipes by name', () => {
     }]);
   });
   it('Should return multiple results if multiple recipes satisfy criteria', () => {
-    const recipesWithCup = searchRecipes(testRecipeData, "cup")
+    const recipesWithCup = searchRecipes(testRecipeData, "cup", testIngredientsData)
     expect(recipesWithCup).to.deep.equal([{
       "id": 595736,
       "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
@@ -342,14 +342,14 @@ describe('Recipes by name', () => {
     }]);
   });
   it('Should return an empty array if no match is found', () => {
-    const noRecipe = searchRecipes(testRecipeData, "pizza")
+    const noRecipe = searchRecipes(testRecipeData, "pizza", testIngredientsData)
     expect(noRecipe).to.deep.equal([])
   })
 });
 
-describe('Recipes by ingredient', () => {
+describe('Search recipes by ingredient', () => {
   it('Should return a filtered list of recipes based on recipes\'s ingredients', () => {
-    const recipesWithSoda = searchRecipes(testRecipeData, "soda")
+    const recipesWithSoda = searchRecipes(testRecipeData, "soda", testIngredientsData)
     expect(recipesWithSoda).to.deep.equal([
       {
         "id": 595736,
@@ -402,7 +402,7 @@ describe('Recipes by ingredient', () => {
     ])
   })
   it('Should return multiple results', () => {
-    const recipesWithFlour = searchRecipes(testRecipeData, "flour")
+    const recipesWithFlour = searchRecipes(testRecipeData, "flour", testIngredientsData)
     expect(recipesWithFlour).to.deep.equal([{
       "id": 595736,
       "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
@@ -497,7 +497,7 @@ describe('Recipes by ingredient', () => {
     ]);
   });
   it('Should not duplicate recipe if it satisfies multiple criteria - name AND ingredients or multiple ingredients', () => {
-    const recipeWithEggs = searchRecipes(testRecipeData, "egg");
+    const recipeWithEggs = searchRecipes(testRecipeData, "egg", testIngredientsData);
     expect(recipeWithEggs).to.deep.equal([
       {
         "id": 764184,
@@ -615,7 +615,7 @@ describe('Recipes by ingredient', () => {
 })
 
   it('Should return an empty array if no match is found', () => {
-    const noEggz = searchRecipes(testRecipeData, "eggz")
+    const noEggz = searchRecipes(testRecipeData, "eggz", testIngredientsData)
     expect(noEggz).to.deep.equal([])
   })
 })

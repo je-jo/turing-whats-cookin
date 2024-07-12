@@ -187,7 +187,7 @@ const renderSearchResults = (e) => {
   if (currentlyActive.values.length) {
     filteredList = recipes.filterByTag(currentlyActive.list, currentlyActive.values);
   }
-  filteredList = recipes.searchRecipes(filteredList, currentlyActive.searchTerm);
+  filteredList = recipes.searchRecipes(filteredList, currentlyActive.searchTerm, data.ingredientsData);
   renderCurrentViewInfo();
   searchBox.value = "";
   currentlyActive.searchTerm = null;
@@ -249,13 +249,6 @@ const handleFavorites = (e) => {
   renderCurrentViewInfo();
 }
 
-//Here is an example function just to demonstrate one way you can export/import between the two js files. You'll want to delete this once you get your own code going.
-// const displayRecipes = () => {
-//   console.log(`Displaying recipes now`)
-// }
-
-
-
 // event listeners
 changeView.addEventListener("change", setActiveList);
 btnSearch.addEventListener("click", renderSearchResults);
@@ -272,7 +265,8 @@ window.addEventListener("click", (e) => {
   }
 });
 
-Promise.all([data.getUsers, data.getRecipes, data.getIngredients])
+window.addEventListener("load", () => {
+  Promise.all([data.getUsers, data.getRecipes, data.getIngredients])
     .then(() => {
         setTimeout(() => {
             currentlyActive.user = users.getRandomUser(data.usersData);
@@ -286,6 +280,7 @@ Promise.all([data.getUsers, data.getRecipes, data.getIngredients])
         console.log(`Sorry, the following error occured: ${err}`)
         recipeDisplay.textContent = `Sorry, the following error occured: ${err}`
     })
+});
 
 export {
   currentlyActive,
