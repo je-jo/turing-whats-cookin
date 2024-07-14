@@ -68,4 +68,5 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - [Fluid Typography Tool](https://fluidtypography.com/)
 - [google-webfonts-helper](https://gwfh.mranftl.com/fonts) - A Hassle-Free Way to Self-Host Google Fonts
 - [MDN - The Dialog element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog)
-- [Gradient Generator](https://www.joshwcomeau.com/gradient-generator/)
+- [Gradient Generator by Josh Comeau](https://www.joshwcomeau.com/gradient-generator/)
+- [Accessible cards by Kitty Giraudel](https://kittygiraudel.com/2022/04/02/accessible-cards/)

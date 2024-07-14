@@ -167,10 +167,14 @@ textarea:not([rows]) {
 }
 
 *:focus-visible,
-input[type="radio"]:focus-visible + label {
+input[type="radio"]:focus-visible + label,
+button.btn-card:focus::before {
   outline: 3px dotted var(--clr-accent);
   outline-offset: 3px;
 }
+
+/* button.btn-card:focus::before*/
+
 
 .sr-only {
   position: absolute;
@@ -425,6 +429,7 @@ ul.recipe-list {
   /* border: 1px solid var(--clr-primary); */
   border-radius: 1rem;
   overflow: hidden;
+  position: relative;
 
 }
 
@@ -534,7 +539,6 @@ button, .btn {
   min-height: 44px;
   padding: 0.25em 1em;
   border-radius: 8px;
-  border: 0;
   font-size: 1.025rem;
   font-weight: 600;
   letter-spacing: 3px;
@@ -548,7 +552,32 @@ button, .btn {
   cursor: pointer;
 }
 
-button:hover,
+button.btn-card {
+  padding: 0;
+  letter-spacing: unset;
+  text-transform: unset;
+  text-align: unset;
+  border: 0;
+}
+
+button.btn-card::before {
+  content: ''; 
+  position: absolute; 
+  inset: 0; 
+  z-index: 1;
+}
+
+
+
+button.btn-card:focus {
+  outline: none;
+}
+
+button.btn-card:focus::before {
+  border: 3px dotted var(--clr-accent);
+} 
+
+.btn:hover,
 input[type="radio"]:not(:checked)+label:hover {
   background-color: var(--clr-primary);
   transition: var(--transition);

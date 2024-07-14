@@ -121,8 +121,11 @@ const renderRecipes = (list) => {
     image.setAttribute("alt", recipe.name);
     image.setAttribute("width", 556);
     image.setAttribute("height", 370);
+    const link = document.createElement("button");
+    link.classList.add("btn-card");
     const title = document.createElement("h3");
     title.textContent = recipe.name;
+    link.appendChild(title);
     const tagBox = document.createElement("ul");
     tagBox.classList.add("wrapper-tags");
     recipe.tags.forEach(tag => {
@@ -135,7 +138,7 @@ const renderRecipes = (list) => {
     listItem.setAttribute("id", recipe.id);
     listItem.classList.add("card");
     listItem.appendChild(image);
-    listItem.appendChild(title);
+    listItem.appendChild(link);
     listItem.appendChild(tagBox);
     recipeDisplay.appendChild(listItem);
   });

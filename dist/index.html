@@ -25,7 +25,6 @@
       <img src="/images/3.Nutritionist.svg" alt="illustration of a woman choosing recipes" width="320" height="320">
     </div>
   </header>
-
   <aside class="wrapper">
     <div class="wrapper-controls change-view">
       <input type="radio" id="view-all" name="view" value="all" checked>
@@ -39,12 +38,12 @@
         <label for="search">Search recipes:
           <input id="search" type="text" placeholder="Name or ingredient" maxlength="20">
         </label>
-        <button id="btn-search"><img src="/images/search_16dp_47280B_FILL1_wght400_GRAD0_opsz20.svg" alt="">Search</button>
+        <button id="btn-search" class="btn"><img src="/images/search_16dp_47280B_FILL1_wght400_GRAD0_opsz20.svg" alt="">Search</button>
       </form>
       <form method="get" class="wrapper-filter">
         <fieldset>
           <legend class="sr-only">Filter recipes by tag:</legend>
-          <button id="btn-tags"><img src="/images/bookmark_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">Show tags</button>
+          <button id="btn-tags" class="btn"><img src="/images/bookmark_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">Show tags</button>
           <ul class="tag-list hidden" id="tag-list" role="list">
           </ul>
         </fieldset>
@@ -64,8 +63,8 @@
         <div class="wrapper-recipe--header">
           <img id="recipe-img" src="/images/turing-logo.png" alt="placeholder image">
           <div class="wrapper-recipe--buttons">
-            <button id="btn-close"><img src="/images/arrow_back_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">Back to recipes</button>
-            <button id="btn-favorite"><img src="/images/favorite_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt=""><span id="btn-favorite-txt">Favorite</span></button>
+            <button id="btn-close" class="btn"><img src="/images/arrow_back_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">Back to recipes</button>
+            <button id="btn-favorite" class="btn"><img src="/images/favorite_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt=""><span id="btn-favorite-txt">Favorite</span></button>
           </div>
           <h3 id="recipe-title">Recipe title</h3>
           <ul id="wrapper-tags" class="wrapper-tags"></ul>
