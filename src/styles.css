@@ -557,11 +557,13 @@ input[type="radio"]:not(:checked)+label:hover {
 .btn-unselect {
   min-width: unset;
   font-size: inherit;
-  min-height: auto;
+  min-height: 100%;
   min-width: auto;
   align-self: center;
-  background-color: transparent;
   border: 0;
+  background-image: url(/src/images/close_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .btn-unselect:hover {

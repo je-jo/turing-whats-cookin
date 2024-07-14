@@ -210,7 +210,6 @@ const renderFiltered = (e) => {
       tag.textContent = value;
       const closeTag = document.createElement("button");
       closeTag.classList.add("btn-unselect");
-      closeTag.textContent = "x";
       tag.appendChild(closeTag);
       selectedTags.appendChild(tag);
     });
