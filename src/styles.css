@@ -149,9 +149,9 @@ textarea:not([rows]) {
   --fs-text: 1.15rem;
   --fs-small: 0.875rem;
   --clr-white: hsl(0, 0%, 100%);
-  --clr-light: #fcfaf7;
-  --clr-primary: #ffd9a3;
-  --clr-text: #47280b;
+  --clr-light: hsl(36, 45%, 98%);
+  --clr-primary: hsl(35, 100%, 82%);
+  --clr-text: hsl(29, 73%, 16%);
   --clr-accent: hsl(19, 100%, 52%);
   --col-width: 16rem;
   --col-width: clamp(15rem, 16.667vw + 11.667rem, 20rem);
@@ -167,14 +167,10 @@ textarea:not([rows]) {
 }
 
 *:focus-visible,
-input[type="radio"]:focus-visible + label,
-button.btn-card:focus::before {
+input[type="radio"]:focus-visible + label {
   outline: 3px dotted var(--clr-accent);
   outline-offset: 3px;
 }
-
-/* button.btn-card:focus::before*/
-
 
 .sr-only {
   position: absolute;
@@ -426,7 +422,6 @@ ul.recipe-list {
   flex-direction: column;
   max-width: var(--col-width);
   background-color: var(--clr-white);
-  /* border: 1px solid var(--clr-primary); */
   border-radius: 1rem;
   overflow: hidden;
   position: relative;
@@ -563,19 +558,18 @@ button.btn-card {
 button.btn-card::before {
   content: ''; 
   position: absolute; 
-  inset: 0; 
+  inset: 0;
   z-index: 1;
 }
 
-
+button.btn-card:focus::before {
+  outline: 4px dotted var(--clr-accent);
+  outline-offset: -4px;
+}
 
 button.btn-card:focus {
   outline: none;
 }
-
-button.btn-card:focus::before {
-  border: 3px dotted var(--clr-accent);
-} 
 
 .btn:hover,
 input[type="radio"]:not(:checked)+label:hover {
