@@ -51,10 +51,10 @@ const renderTagList = () => {
   allTags.forEach(tag => {
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
-    checkbox.setAttribute("id", tag);
+    checkbox.setAttribute("id", tag.replace(" ", "-"));
     checkbox.setAttribute("value", tag);
     const label = document.createElement("label");
-    label.setAttribute("for", tag);
+    label.setAttribute("for", tag.replace(" ", "-"));
     label.textContent = tag;
     const listItem = document.createElement("li");
     listItem.classList.add("form-control");
@@ -105,11 +105,11 @@ const renderCurrentViewInfo = () => {
   if (currentlyActive.values.length && currentlyActive.searchTerm) {
     viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in selected tags in ${currentlyActive.listName}:`;
   } else if (currentlyActive.searchTerm) {
-    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName} `;
+    viewInfo.textContent = `Viewing search results for "${currentlyActive.searchTerm}" in ${currentlyActive.listName}:`;
   } else if (currentlyActive.values.length) {
     viewInfo.textContent = `Viewing ${currentlyActive.listName} filtered by selected tags:`;
   } else {
-    viewInfo.textContent = `Viewing ${currentlyActive.listName}`;
+    viewInfo.textContent = `Viewing ${currentlyActive.listName}:`;
   }
 };
 
@@ -118,14 +118,14 @@ const renderRecipes = (list) => {
   list.forEach(recipe => {
     const image = document.createElement("img");
     image.setAttribute("src", recipe.image);
-    image.setAttribute("alt", recipe.name);
+    image.setAttribute("alt", "");
     image.setAttribute("width", 556);
     image.setAttribute("height", 370);
-    const link = document.createElement("button");
-    link.classList.add("btn-card");
     const title = document.createElement("h3");
-    title.textContent = recipe.name;
-    link.appendChild(title);
+    const button = document.createElement("button");
+    button.classList.add("btn-card", "h4");
+    button.textContent = recipe.name;
+    title.appendChild(button);
     const tagBox = document.createElement("ul");
     tagBox.classList.add("wrapper-tags");
     recipe.tags.forEach(tag => {
@@ -138,7 +138,7 @@ const renderRecipes = (list) => {
     listItem.setAttribute("id", recipe.id);
     listItem.classList.add("card");
     listItem.appendChild(image);
-    listItem.appendChild(link);
+    listItem.appendChild(title);
     listItem.appendChild(tagBox);
     recipeDisplay.appendChild(listItem);
   });
@@ -229,7 +229,7 @@ const handleFilterTags = (e) => {
   if (e.target.closest("button")) {
     let tagToRemove = e.target.parentNode.firstChild.textContent;
     currentlyActive.values.splice(currentlyActive.values.indexOf(tagToRemove), 1);
-    const boxToUncheck = document.getElementById(tagToRemove);
+    const boxToUncheck = document.getElementById(tagToRemove.replace(" ", "-"));
     boxToUncheck.checked = false;
     renderFiltered(e);
   }
