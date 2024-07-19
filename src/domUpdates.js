@@ -145,31 +145,32 @@ const renderRecipes = (list) => {
 };
 
 const renderChosenRecipe = () => {
-  recipeImg.setAttribute("src", currentlyActive.recipe.image);
-  recipeImg.setAttribute("alt", currentlyActive.recipe.name);
+  const { id, image, ingredients, name, tags } = currentlyActive.recipe;
+  recipeImg.setAttribute("src", image);
+  recipeImg.setAttribute("alt", name);
   if (currentlyActive.user.recipesToCook.includes(currentlyActive.recipe)) {
     btnFavoriteText.textContent = "Remove favorite";
   } else {
     btnFavoriteText.textContent = "Add favorite";
   }
-  recipeTitle.textContent = currentlyActive.recipe.name;
+  recipeTitle.textContent = name;
   recipeTags.textContent = "";
-  currentlyActive.recipe.tags.forEach(tag => {
+  tags.forEach(tag => {
     const recipeTag = document.createElement("li");
     recipeTag.classList.add("tag");
     recipeTag.textContent = tag;
     recipeTags.appendChild(recipeTag);
   });
   recipeIngredientsList.textContent = "";
-  const ingredientNames = recipes.findRecipeIngredients(data.recipeData, currentlyActive.recipe.id, data.ingredientsData);
-  currentlyActive.recipe.ingredients.forEach((ingredient, index) => {
+  const ingredientNames = recipes.findRecipeIngredients(data.recipeData, id, data.ingredientsData);
+  ingredients.forEach((ingredient, index) => {
     const listItem = document.createElement("li");
     listItem.textContent = `${ingredientNames[index]} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}`;
     recipeIngredientsList.appendChild(listItem);
   });
-  recipeCost.textContent = recipes.calculateCost(data.recipeData, currentlyActive.recipe.id, data.ingredientsData).toFixed(2);
+  recipeCost.textContent = recipes.calculateCost(data.recipeData, id, data.ingredientsData).toFixed(2);
   recipeInstructionsList.textContent = "";
-  const instructions = recipes.getInstructions(data.recipeData, currentlyActive.recipe.id);
+  const instructions = recipes.getInstructions(data.recipeData, id);
   instructions.forEach(instruction => {
     const listItem = document.createElement("li");
     listItem.textContent = instruction;
