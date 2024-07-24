@@ -268,23 +268,6 @@ window.addEventListener("click", (e) => {
   }
 });
 
-window.addEventListener("load", () => {
-  Promise.all([data.getUsers, data.getRecipes, data.getIngredients])
-    .then(() => {
-      setTimeout(() => {
-        currentlyActive.user = users.getRandomUser(data.usersData);
-        currentlyActive.list = data.recipeData;
-        renderTagList();
-        renderCurrentViewInfo();
-        renderRecipes(data.recipeData);
-      }, 500);
-    })
-    .catch(err => {
-      console.log(`Sorry, the following error occured: ${err}`);
-      recipeDisplay.textContent = `Sorry, the following error occured: ${err}`;
-    });
-});
-
 export {
   currentlyActive,
   recipeDisplay,
