@@ -1,8 +1,9 @@
 import * as data from './apiCalls';
 import * as recipes from './recipes';
 import * as users from './users';
+import MicroModal from 'micromodal';
 
-const body = document.querySelector("body");
+// const body = document.querySelector("body");
 const tagList = document.querySelector("#tag-list");
 const searchBox = document.querySelector("#search");
 const btnSearch = document.querySelector("#btn-search");
@@ -12,14 +13,14 @@ const viewInfo = document.querySelector("#view-info");
 const selectedTags = document.querySelector("#selected-tags");
 const recipeDisplay = document.querySelector("#recipe-list");
 
-const recipeModal = document.querySelector("#recipe-modal");
+// const recipeModal = document.querySelector("#recipe-modal");
 const recipeImg = document.querySelector("#recipe-img");
-const recipeTitle = document.querySelector("#recipe-title");
+const recipeTitle = document.querySelector("#modal-1-title");
 const recipeTags = document.querySelector("#wrapper-tags");
 const recipeIngredientsList = document.querySelector("#recipe-ingredients");
 const recipeCost = document.querySelector("#recipe-cost");
 const recipeInstructionsList = document.querySelector("#recipe-instructions");
-const btnClose = document.querySelector("#btn-close");
+// const btnClose = document.querySelector("#btn-close");
 
 const userWelcome = document.querySelector("#user");
 const btnFavorite = document.querySelector("#btn-favorite");
@@ -64,10 +65,10 @@ const renderTagList = () => {
   });
 };
 
-const closeModal = () => {
-  body.style.overflow = "auto";
-  recipeModal.close();
-};
+// const closeModal = () => {
+//   body.style.overflow = "auto";
+//   recipeModal.close();
+// };
 
 // set currently active
 
@@ -115,6 +116,7 @@ const renderCurrentViewInfo = () => {
 
 const renderRecipes = (list) => {
   recipeDisplay.textContent = "";
+  console.log("I'm rendering a new list");
   list.forEach(recipe => {
     const image = document.createElement("img");
     image.setAttribute("src", recipe.image);
@@ -125,6 +127,8 @@ const renderRecipes = (list) => {
     const button = document.createElement("button");
     button.classList.add("btn-card", "h4");
     button.textContent = recipe.name;
+    // button.dataset.micromodalTrigger = "modal-1";
+    console.log("I just added a dataset to each button");
     title.appendChild(button);
     const tagBox = document.createElement("ul");
     tagBox.classList.add("wrapper-tags");
@@ -145,6 +149,7 @@ const renderRecipes = (list) => {
 };
 
 const renderChosenRecipe = () => {
+  console.log("triggered rendering chosen recipe");
   const { id, image, ingredients, name, tags } = currentlyActive.recipe;
   recipeImg.setAttribute("src", image);
   recipeImg.setAttribute("alt", name);
@@ -176,9 +181,9 @@ const renderChosenRecipe = () => {
     listItem.textContent = instruction;
     recipeInstructionsList.appendChild(listItem);
   });
+ 
   setTimeout(() => {
-    recipeModal.showModal();
-    body.style.overflow = "hidden";
+    MicroModal.show('modal-1');
   }, 100);
 };
 
@@ -242,6 +247,7 @@ const handleFavorites = (e) => {
     users.removeFromFavorites(currentlyActive.user, currentlyActive.recipe);
     btnFavoriteText.textContent = "Add favorite";
     renderRecipes(currentlyActive.list);
+    console.log("I just rendered a new list because of adding favs");
   } else {
     users.addToFavorites(currentlyActive.user, currentlyActive.recipe);
     btnFavoriteText.textContent = "Remove favorite";
@@ -260,7 +266,7 @@ recipeDisplay.addEventListener("click", setActiveRecipe);
 tagList.addEventListener("change", renderFiltered);
 selectedTags.addEventListener("click", handleFilterTags);
 btnFavorite.addEventListener("click", handleFavorites);
-btnClose.addEventListener("click", closeModal);
+// btnClose.addEventListener("click", closeModal);
 
 window.addEventListener("click", (e) => {
   if (!e.target.closest("#btn-tags") && !e.target.closest("#tag-list")) {
@@ -268,12 +274,17 @@ window.addEventListener("click", (e) => {
   }
 });
 
+MicroModal.init({
+  disableScroll: true
+});
+
+
 export {
   currentlyActive,
   recipeDisplay,
   toggleVisibility,
   renderTagList,
-  closeModal,
+  // closeModal,
   setActiveList,
   setActiveRecipe,
   renderCurrentViewInfo,
