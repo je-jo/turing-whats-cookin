@@ -67,13 +67,13 @@
           href="https://github.com/je-jo" target="_blank">Jelena Jovičić</a>, 2024.</small></p>
   </footer>
 
-  <div id="modal-1" aria-hidden="true" class="modal">
+  <div id="modal-1" aria-hidden="true" class="modal micromodal-slide">
     <div tabindex="-1" class="modal__overlay">
-      <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" class="recipe-modal">
-        <div class="wrapper-recipe">
-          <header class="wrapper-recipe--header">
+      <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" class="modal__container">
+        <div class="modal-wrapper-inner">
+          <header class="modal-header">
             <img id="recipe-img" src="./images/turing-logo.png" alt="placeholder image">
-            <div class="wrapper-recipe--buttons">
+            <div class="modal-btns">
               <button aria-label="Close modal" id="btn-close" class="btn" data-micromodal-close><img
                   src="./images/arrow_back_16dp_47280B_FILL0_wght400_GRAD0_opsz20.svg" alt="">Back to recipes</button>
               <button aria-label="Add to favorites" id="btn-favorite" class="btn"><img
@@ -87,7 +87,7 @@
           </header>
           <div id="modal-1-content">
             <h4>Ingredients:</h4>
-            <ul id="recipe-ingredients" class="recipe-ingredients"></ul>
+            <ul id="recipe-ingredients" class="modal-ingredients"></ul>
             <p>Estimated total cost of ingredients: $<span id="recipe-cost"></span>
             <h4>Instructions:</h4>
             <ol id="recipe-instructions"></ol>

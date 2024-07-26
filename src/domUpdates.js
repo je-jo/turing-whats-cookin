@@ -13,14 +13,12 @@ const viewInfo = document.querySelector("#view-info");
 const selectedTags = document.querySelector("#selected-tags");
 const recipeDisplay = document.querySelector("#recipe-list");
 
-// const recipeModal = document.querySelector("#recipe-modal");
 const recipeImg = document.querySelector("#recipe-img");
 const recipeTitle = document.querySelector("#modal-1-title");
 const recipeTags = document.querySelector("#wrapper-tags");
 const recipeIngredientsList = document.querySelector("#recipe-ingredients");
 const recipeCost = document.querySelector("#recipe-cost");
 const recipeInstructionsList = document.querySelector("#recipe-instructions");
-// const btnClose = document.querySelector("#btn-close");
 
 const userWelcome = document.querySelector("#user");
 const btnFavorite = document.querySelector("#btn-favorite");
@@ -116,7 +114,6 @@ const renderCurrentViewInfo = () => {
 
 const renderRecipes = (list) => {
   recipeDisplay.textContent = "";
-  console.log("I'm rendering a new list");
   list.forEach(recipe => {
     const image = document.createElement("img");
     image.setAttribute("src", recipe.image);
@@ -128,7 +125,6 @@ const renderRecipes = (list) => {
     button.classList.add("btn-card", "h4");
     button.textContent = recipe.name;
     // button.dataset.micromodalTrigger = "modal-1";
-    console.log("I just added a dataset to each button");
     title.appendChild(button);
     const tagBox = document.createElement("ul");
     tagBox.classList.add("wrapper-tags");
@@ -149,7 +145,6 @@ const renderRecipes = (list) => {
 };
 
 const renderChosenRecipe = () => {
-  console.log("triggered rendering chosen recipe");
   const { id, image, ingredients, name, tags } = currentlyActive.recipe;
   recipeImg.setAttribute("src", image);
   recipeImg.setAttribute("alt", name);
@@ -181,7 +176,7 @@ const renderChosenRecipe = () => {
     listItem.textContent = instruction;
     recipeInstructionsList.appendChild(listItem);
   });
- 
+
   setTimeout(() => {
     MicroModal.show('modal-1');
   }, 100);
@@ -247,7 +242,6 @@ const handleFavorites = (e) => {
     users.removeFromFavorites(currentlyActive.user, currentlyActive.recipe);
     btnFavoriteText.textContent = "Add favorite";
     renderRecipes(currentlyActive.list);
-    console.log("I just rendered a new list because of adding favs");
   } else {
     users.addToFavorites(currentlyActive.user, currentlyActive.recipe);
     btnFavoriteText.textContent = "Remove favorite";
@@ -275,8 +269,10 @@ window.addEventListener("click", (e) => {
 });
 
 MicroModal.init({
-  disableScroll: true
+  disableScroll: true // [6]
 });
+
+
 
 
 export {
