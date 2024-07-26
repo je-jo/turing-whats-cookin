@@ -4,7 +4,10 @@
 
 A recipe tracking / meal planning application that allows users to view recipes they want to cook and plan shopping trips around them. Users should view a list of recipes and choose recipes to cook.
 
-This is a learning project from Turing School Module 2. The spec can be found [here](https://frontend.turing.edu/projects/module-2/whats-cookin-part-one.html).
+This is a learning project from Turing School Module 2. 
+
+- The spec for **Part I** can be found [here](https://frontend.turing.edu/projects/module-2/whats-cookin-part-one.html).
+- The spec for **Part II** can be found [here](https://frontend.turing.edu/projects/module-2/whats-cookin-part-two-agile.html).
 
 ## Learning Goals
 
@@ -16,11 +19,11 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 
 ## Preview
 
-![](/screenshot1.png)
-
-![](/screenshot2.png)
+![](/cookin.gif)
 
 ## Features
+
+### Part I
 
 - [x] View all recipes;
 - [x] Filter recipes by tag;
@@ -35,8 +38,13 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - [x] Build test suite using sample dataset;
 - [x] Extension - Filter by multiple tags;
 - [x] Extension - Search by name or ingredient;
+- [x] Extension - Implement one of the listed 3rd party libraries - Micromodal.
 
 ## Instructions
+
+[See live page!](je-jo.github.io/turing-whats-cookin/)
+
+Or...
 
 - Clone this repo.
 - Change into the directory and run `npm install`.
@@ -51,6 +59,7 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 - Chai
 - Webpack
 - Fetch API
+- Micromodal.js
 
 ## Design Inspiration
 
@@ -59,6 +68,7 @@ This is a learning project from Turing School Module 2. The spec can be found [h
 
 ## Credits
 
+- [Micromodal.js](https://www.npmjs.com/package/micromodal)
 - [Notioly by Mary Amato](https://notioly.com/) - Notion-style illustrations free pack, for the hero image.
 
 ## Helpful links
