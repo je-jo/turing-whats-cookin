@@ -42,7 +42,7 @@ This is a learning project from Turing School Module 2.
 
 ## Instructions
 
-[See live page!](je-jo.github.io/turing-whats-cookin/)
+[See live page!](https://je-jo.github.io/turing-whats-cookin/)
 
 Or...
 
